@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TinyService.Infrastructure.RequestHandler
 {
-    public interface IRequestController
+    public interface IRequestServiceController
     {
         TResponse Send<TRequest, TResponse>(TRequest request)
             where TRequest : class, IRequest

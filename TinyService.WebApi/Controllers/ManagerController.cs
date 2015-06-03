@@ -1,8 +1,8 @@
 ﻿namespace TinyService.WebApi.Controllers
 {
     using System.Web.Http;
-using TinyService.Domain.Repository;
-using TinyService.WebApi.Domain;
+    using TinyService.Domain.Repository;
+    using TinyService.WebApi.Domain;
     using TinyService.Extension.Repository;
     using System.Collections.Generic;
     using System.Collections;
@@ -10,28 +10,33 @@ using TinyService.WebApi.Domain;
     using System.Threading.Tasks;
     using System.Linq.Expressions;
     using System.Linq;
-  
+    using TinyService.Infrastructure.RequestHandler;
+
     public class ManagerController : ApiController
     {
-        private readonly IRepository<string, Manager> _store;
+         
+        private readonly IRequestServiceController _servicecontroller;
         public ManagerController()
         {
-            this._store = ObjectFactory.GetService<IRepository<string, Manager>>();
-            
+             this._servicecontroller = ObjectFactory.GetService<IRequestServiceController>();
         }
 
-          [Route("api/Manager")]
+        [Route("api/Manager")]
         public async Task<IHttpActionResult> GetValues()
         {
-            
-            return Ok(this._store.GetAll().ToList());
+            var result =  this._servicecontroller.Send<QueryAllManager, IList<Manager>>(new QueryAllManager());
+            return Ok(result);
         }
-         [Route("api/Add")]
-       [HttpGet]
+        [Route("api/Add")]
+        [HttpGet]
         public async Task<IHttpActionResult> AddManager()
-          {
-            await this._store.InsertAsync(new Manager() { Title = "我是管理者" });
-            return this.Ok(new { Success = true });
-          }
+        {
+            var result = await this._servicecontroller.SendAsync<AddManager, Result>(new AddManager()
+              {
+                  Body = new Manager() { Title = "我是管理者" }
+              });
+
+            return this.Ok(new { Success = true, body = result });
+        }
     }
 }

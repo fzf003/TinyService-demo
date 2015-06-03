@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TinyService.Infrastructure.RequestHandler
 {
-    public abstract class AbstractRequestController : IRequestController
+    public abstract class AbstractRequestServiceController : IRequestServiceController
     {
         public Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request)
             where TRequest : class,IRequest

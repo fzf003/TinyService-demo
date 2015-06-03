@@ -72,13 +72,13 @@
     <Compile Include="Infrastructure\Process\Actor.cs" />
     <Compile Include="Infrastructure\RegisterCenter\AcorProcessRegistry.cs" />
     <Compile Include="Infrastructure\RegisterCenter\EventHandlerRegistry.cs" />
-    <Compile Include="Infrastructure\RequestHandler\AbstractRequestController.cs" />
-    <Compile Include="Infrastructure\RequestHandler\IRequestController.cs" />
+    <Compile Include="Infrastructure\RequestHandler\AbstractRequestServiceController.cs" />
+    <Compile Include="Infrastructure\RequestHandler\IRequestServiceController.cs" />
     <Compile Include="Infrastructure\RequestHandler\IRequestHandler.cs" />
     <Compile Include="Infrastructure\Handler.cs" />
     <Compile Include="Infrastructure\Message\Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\DefaultRequestService.cs" />
+    <Compile Include="Service\DefaultRequestController.cs" />
     <Compile Include="Service\DefaultLocalServiceBus.cs" />
   </ItemGroup>
   <ItemGroup>

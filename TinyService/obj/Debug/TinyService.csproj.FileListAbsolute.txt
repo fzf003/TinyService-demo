@@ -13,4 +13,3 @@ D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\System.Reactive.Inte
 D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\System.Reactive.Linq.xml
 D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\System.Reactive.PlatformServices.xml
 D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\Microsoft.Practices.ServiceLocation.dll
-D:\案例\Actor\MiniQuick\TinyService\TinyService\obj\Debug\TinyService.csprojResolveAssemblyReference.cache

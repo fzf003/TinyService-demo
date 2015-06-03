@@ -22,6 +22,7 @@ namespace TinyService.WebApi
     using TinyService.Domain.Repository;
     using TinyService.WebApi.Domain;
     using System.Reflection;
+    using TinyService.WebApi.Handler;
 
     public class Startup
     {
@@ -51,14 +52,16 @@ namespace TinyService.WebApi
 
             app.UseStageMarker(PipelineStage.MapHandler);
             httpConfiguration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
-            
-            InitTinyService((containerbuilder) => {
+
+            InitTinyService((containerbuilder) =>
+            {
                 containerbuilder.RegisterType<DefaultLocalServiceBus>().SingleInstance().AsImplementedInterfaces();
-                containerbuilder.RegisterType<InMomeryRepository>().SingleInstance().As<IRepository<string,Manager>>();
-      
+                containerbuilder.RegisterType<InMomeryRepository>().SingleInstance().As<IRepository<string, Manager>>();
+                containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
+                containerbuilder.RegisterType<ManagerStoreService>().AsImplementedInterfaces();
+
+
             });
-
-
         }
 
         static void InitTinyService(Action<ContainerBuilder> action)

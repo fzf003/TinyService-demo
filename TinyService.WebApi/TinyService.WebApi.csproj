@@ -112,7 +112,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Result.cs" />
     <Compile Include="Domain\Manager.cs" />
+    <Compile Include="Handler\ManagerStoreHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\InMomeryRepository.cs" />
     <Compile Include="Startup.cs" />
