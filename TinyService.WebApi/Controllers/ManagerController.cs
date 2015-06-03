@@ -14,17 +14,23 @@
 
     public class ManagerController : ApiController
     {
-         
+
         private readonly IRequestServiceController _servicecontroller;
         public ManagerController()
+            : this(ObjectFactory.GetService<IRequestServiceController>())
         {
-             this._servicecontroller = ObjectFactory.GetService<IRequestServiceController>();
+
+        }
+
+        public ManagerController(IRequestServiceController servicecontroller)
+        {
+            this._servicecontroller = servicecontroller;
         }
 
         [Route("api/Manager")]
-        public async Task<IHttpActionResult> GetValues()
+        public async Task<IHttpActionResult> GetManagerList()
         {
-            var result =  this._servicecontroller.Send<QueryAllManager, IList<Manager>>(new QueryAllManager());
+            var result = this._servicecontroller.Send<QueryAllManager, IList<Manager>>(new QueryAllManager());
             return Ok(result);
         }
         [Route("api/Add")]
