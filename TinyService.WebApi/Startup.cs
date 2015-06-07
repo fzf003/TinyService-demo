@@ -23,6 +23,7 @@ namespace TinyService.WebApi
     using TinyService.WebApi.Domain;
     using System.Reflection;
     using TinyService.WebApi.Handler;
+    using TinyService.Infrastructure.RegisterCenter;
 
     public class Startup
     {
@@ -59,9 +60,11 @@ namespace TinyService.WebApi
                 containerbuilder.RegisterType<InMomeryRepository>().SingleInstance().As<IRepository<string, Manager>>();
                 containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
                 containerbuilder.RegisterType<ManagerStoreService>().AsImplementedInterfaces();
-
+               
 
             });
+
+            ActorProcessRegistry.Instance.AddActor(typeof(RequestActor), new RequestActor());
         }
 
         static void InitTinyService(Action<ContainerBuilder> action)
@@ -69,8 +72,7 @@ namespace TinyService.WebApi
             var containerbuilder = new ContainerBuilder();
             action(containerbuilder);
             var container = containerbuilder.Build();
-            ObjectFactory.SetContainer(new AutofacAdapter(container));
-            ServiceLocator.SetLocatorProvider(() => new AutofacServiceLocator(container));
+            ObjectFactory.SetContainer(new AutofacServiceLocator(container));
         }
 
         

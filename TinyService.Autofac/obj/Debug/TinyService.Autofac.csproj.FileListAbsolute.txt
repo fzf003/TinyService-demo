@@ -16,3 +16,5 @@ D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\bin\Debug\System.Threa
 D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\bin\Debug\System.Reactive.Core.xml
 D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\bin\Debug\System.Reactive.Interfaces.xml
 D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\bin\Debug\System.Reactive.Linq.xml
+D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\bin\Debug\Microsoft.Practices.ServiceLocation.xml

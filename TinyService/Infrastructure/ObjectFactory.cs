@@ -9,11 +9,12 @@ namespace TinyService.Infrastructure
 {
     public class ObjectFactory
     {
-        static IObjectContainer Current { get;  set; }
+    
 
-        public static void SetContainer(IObjectContainer container)
+        public static void SetContainer(IServiceLocator  serviceLocator)
         {
-            Current = container;
+            ServiceLocator.SetLocatorProvider(()=>serviceLocator);
+            
         }
 
         public static T GetService<T>()

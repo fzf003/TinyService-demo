@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TinyService.Infrastructure
 {
-    public interface IServiceBus
+    public interface IServiceBus:IDisposable
     {
         void Send<TCommand>(TCommand message) where TCommand : class;
         IDisposable RegisterMessageHandler<TCommand>(Action<TCommand> handler) where TCommand : class;

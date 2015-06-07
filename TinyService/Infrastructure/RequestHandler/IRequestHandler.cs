@@ -23,7 +23,7 @@ namespace TinyService.Infrastructure.RequestHandler
         where TRequest : class,IRequest
         where TResponse : class
     {
-        Task<TResponse> AsyncHandle(TRequest message);
+        Task<TResponse> HandleAsync(TRequest message);
     }
    
 

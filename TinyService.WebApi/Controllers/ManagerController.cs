@@ -11,6 +11,8 @@
     using System.Linq.Expressions;
     using System.Linq;
     using TinyService.Infrastructure.RequestHandler;
+    using TinyService.Infrastructure.RegisterCenter;
+    using TinyService.WebApi.Handler;
 
     public class ManagerController : ApiController
     {
@@ -28,7 +30,7 @@
         }
 
         [Route("api/Manager")]
-        public async Task<IHttpActionResult> GetManagerList()
+        public IHttpActionResult GetManagerList()
         {
             var result = this._servicecontroller.Send<QueryAllManager, IList<Manager>>(new QueryAllManager());
             return Ok(result);
@@ -41,8 +43,17 @@
               {
                   Body = new Manager() { Title = "我是管理者" }
               });
+     
 
             return this.Ok(new { Success = true, body = result });
+        }
+
+        [Route("api/GetCount")]
+        public async Task<IHttpActionResult> GetCount()
+        {
+            var count= await this._servicecontroller.SendAsync<CountManager,Result>(new CountManager());
+
+            return this.Ok(  new { Total=count  });
         }
     }
 }

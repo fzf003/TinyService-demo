@@ -19,8 +19,20 @@ namespace TinyService.Extension.Repository
 
         public static async Task<TEntity> InsertOrUpdateAsync<TId, TEntity>(this IRepository<TId, TEntity> repository, TEntity entity) where TEntity : class,IEntity<TId>
         {
-            return await Task.Run<TEntity>(() => repository.InsertOrUpdate(entity));
+            return await Task.FromResult<TEntity>(repository.InsertOrUpdate(entity));
 
         }
+
+        public static async Task<int> CountAsync<TId, TEntity>(this IRepository<TId, TEntity> repository) where TEntity : class,IEntity<TId>
+        {
+            return await Task.FromResult<int>(repository.Count());
+        }
+
+        public static async Task<int> CountAsync<TId, TEntity>(this IRepository<TId, TEntity> repository,System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate) where TEntity : class,IEntity<TId>
+        {
+            return await Task.FromResult<int>(repository.Count(predicate));
+        }
+
+         
     }
 }

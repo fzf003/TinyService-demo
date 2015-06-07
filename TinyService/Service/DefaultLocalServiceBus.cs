@@ -18,10 +18,12 @@ namespace TinyService.Service
         private readonly IDictionary<string, object> _messagehandler;
 
         private readonly EventHandlerRegistry _eventsobservables = EventHandlerRegistry.Instance;
-
+        private CompositeDisposable socketDisposable;
         public DefaultLocalServiceBus()
         {
             _messagehandler = new ConcurrentDictionary<string, object>();
+            socketDisposable = new CompositeDisposable();
+
         }
 
         public IDisposable RegisterMessageHandler<TCommand>(Action<TCommand> handler) where TCommand : class
@@ -34,12 +36,17 @@ namespace TinyService.Service
         public IDisposable RegisterMessageHandler<TCommand>(IObserver<TCommand> observer) where TCommand : class
         {
             this._messagehandler[typeof(TCommand).Name] = observer;
-            return Disposable.Create(() =>
+            var disp= Disposable.Create(() =>
             {
                 var observerhandler = (this._messagehandler[typeof(TCommand).Name] as IObserver<TCommand>);
                 observerhandler.OnCompleted();
                 this._messagehandler.Remove(typeof(TCommand).Name);
+                
             });
+
+            socketDisposable.Add(disp);
+            return disp;
+
         }
 
         public void Send<TCommand>(TCommand message) where TCommand : class
@@ -65,10 +72,20 @@ namespace TinyService.Service
         {
             var subject = new Subject<T>();
             this._eventsobservables.AddEventHandler(typeof(T), subject);
-            return subject.Subscribe(handler);
+            var disp=subject.Subscribe(handler);
+            socketDisposable.Add(disp);
+            return disp;
         }
 
 
 
+
+        public void Dispose()
+        {
+            socketDisposable.Dispose();
+            this._eventsobservables.Subjects.Clear();
+            _messagehandler.Clear();
+
+        }
     }
 }

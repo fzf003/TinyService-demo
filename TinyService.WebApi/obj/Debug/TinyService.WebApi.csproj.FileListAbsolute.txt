@@ -38,3 +38,5 @@ D:\案例\Actor\MiniQuick\TinyService\TinyService.WebApi\obj\Debug\TinyService.W
 D:\案例\Actor\MiniQuick\TinyService\TinyService.WebApi\obj\Debug\TinyService.WebApi.pdb
 D:\案例\Actor\MiniQuick\TinyService\TinyService.WebApi\bin\Autofac.Integration.WebApi.dll
 D:\案例\Actor\MiniQuick\TinyService\TinyService.WebApi\bin\Autofac.Integration.WebApi.xml
+D:\案例\Actor\MiniQuick\TinyService\TinyService.WebApi\bin\Microsoft.Practices.ServiceLocation.pdb
+D:\案例\Actor\MiniQuick\TinyService\TinyService.WebApi\bin\Microsoft.Practices.ServiceLocation.xml

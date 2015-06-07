@@ -12,7 +12,7 @@ namespace TinyService.Infrastructure.RequestHandler
             where TRequest : class,IRequest
             where TResponse : class
         {
-            return GetAsyncCommandHandler<TRequest, TResponse>().AsyncHandle(request);
+            return GetAsyncCommandHandler<TRequest, TResponse>().HandleAsync(request);
         }
 
         public TResponse Send<TRequest, TResponse>(TRequest request)
