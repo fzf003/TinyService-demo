@@ -32,5 +32,7 @@ namespace TinyService.Infrastructure.RequestHandler
             where TRequest : class,IRequest
             where TResponse : class;
 
+
+
     }
 }

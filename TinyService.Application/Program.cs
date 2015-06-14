@@ -44,21 +44,33 @@ namespace TinyService.Application
 
         static void Init()
         {
-            TinyService((containerbuilder) =>
+            TinyServiceSetup.Start((configbulider) =>
             {
-                containerbuilder.RegisterType<DefaultLocalServiceBus>().SingleInstance().AsImplementedInterfaces();
-                containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
-                containerbuilder.RegisterComponents(typeof(Foo).Assembly).InstancePerRequest().AsImplementedInterfaces();
+                configbulider.InitConfig((containerbuilder) =>
+                  {
+                      containerbuilder.RegisterType<DefaultLocalServiceBus>().SingleInstance().AsImplementedInterfaces();
+                      containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
+                      containerbuilder.RegisterComponents(typeof(Foo).Assembly).InstancePerRequest().AsImplementedInterfaces();
+                  })
+                  .UseMapper(() => { 
+                  
+                  });
             });
         }
 
 
-        private static void TinyService(Action<ContainerBuilder> action)
+       
+    }
+
+    public static class MapperExt
+    {
+        public static IConfigurationBuilder UseMapper(this IConfigurationBuilder configbulider,Action action)
         {
-            var builder = new ContainerBuilder();
-            action(builder);
-            var container = builder.Build();
-            ObjectFactory.SetContainer(new AutofacServiceLocator(container));
+            if (configbulider != null)
+            {
+                action();
+            }
+            return configbulider;
         }
     }
 }

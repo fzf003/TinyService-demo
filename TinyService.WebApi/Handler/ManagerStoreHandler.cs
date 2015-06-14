@@ -13,6 +13,7 @@ namespace TinyService.WebApi.Handler
     public interface IManagerStoreService:IAsyncRequestHandler<AddManager,Result>,
                                           IRequestHandler<QueryAllManager,IList<Manager>>,
                                           IAsyncRequestHandler<CountManager, Result>
+                                          
     {
 
     }
@@ -45,6 +46,8 @@ namespace TinyService.WebApi.Handler
             };
         }
 
-   
+
+
+       
     }
 }

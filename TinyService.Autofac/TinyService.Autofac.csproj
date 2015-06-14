@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="AutofacAdapter.cs" />
     <Compile Include="AutofacServiceLocator.cs" />
+    <Compile Include="AutoFacConfigurationBuilder.cs" />
+    <Compile Include="TinyServiceSetup.cs" />
     <Compile Include="CompositionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

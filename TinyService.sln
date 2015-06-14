@@ -13,6 +13,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyService.WebApi", "TinyS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyService.Application", "TinyService.Application\TinyService.Application.csproj", "{B4DE1BB2-6F21-4B2C-8D05-586C9EBC5030}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyService.EntityFramework", "TinyService.EntityFramework\TinyService.EntityFramework.csproj", "{89D46F95-68EA-463D-AA9E-69929E49F874}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{67799486-0EAA-452C-BAC3-F55C166DE409}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyService.Test", "TinyService.Test\TinyService.Test.csproj", "{1E16D5C0-B64E-4594-B093-4311E90BDFE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +41,14 @@ Global
 		{B4DE1BB2-6F21-4B2C-8D05-586C9EBC5030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4DE1BB2-6F21-4B2C-8D05-586C9EBC5030}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4DE1BB2-6F21-4B2C-8D05-586C9EBC5030}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89D46F95-68EA-463D-AA9E-69929E49F874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89D46F95-68EA-463D-AA9E-69929E49F874}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89D46F95-68EA-463D-AA9E-69929E49F874}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89D46F95-68EA-463D-AA9E-69929E49F874}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E16D5C0-B64E-4594-B093-4311E90BDFE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E16D5C0-B64E-4594-B093-4311E90BDFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E16D5C0-B64E-4594-B093-4311E90BDFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E16D5C0-B64E-4594-B093-4311E90BDFE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +56,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{71F1F53A-F414-4EA3-BEA8-C92D211D7ADC} = {C3356C34-BADD-4F90-B15F-72BA349CABC5}
 		{B4DE1BB2-6F21-4B2C-8D05-586C9EBC5030} = {C3356C34-BADD-4F90-B15F-72BA349CABC5}
+		{1E16D5C0-B64E-4594-B093-4311E90BDFE5} = {67799486-0EAA-452C-BAC3-F55C166DE409}
 	EndGlobalSection
 EndGlobal

@@ -11,19 +11,18 @@ namespace TinyService.WebApi
     using Microsoft.Owin.StaticFiles;
     using Owin;
 
-    using TinyService.Infrastructure;
     using Microsoft.Practices.ServiceLocation;
     using Autofac;
-    using TinyService.autofac;
     using System;
-    using TinyService.Service;
-    using TinyService.WebApi.Repository;
     using Autofac.Integration.WebApi;
-    using TinyService.Domain.Repository;
-    using TinyService.WebApi.Domain;
     using System.Reflection;
+    using TinyService.Service;
+    using TinyService.Domain.Repository;
+    using TinyService.WebApi.Repository;
     using TinyService.WebApi.Handler;
+    using TinyService.WebApi.Domain;
     using TinyService.Infrastructure.RegisterCenter;
+    using TinyService.autofac;
 
     public class Startup
     {
@@ -54,27 +53,21 @@ namespace TinyService.WebApi
             app.UseStageMarker(PipelineStage.MapHandler);
             httpConfiguration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
-            InitTinyService((containerbuilder) =>
+            TinyServiceSetup.Start((configbulider) =>
             {
-                containerbuilder.RegisterType<DefaultLocalServiceBus>().SingleInstance().AsImplementedInterfaces();
-                containerbuilder.RegisterType<InMomeryRepository>().SingleInstance().As<IRepository<string, Manager>>();
-                containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
-                containerbuilder.RegisterType<ManagerStoreService>().AsImplementedInterfaces();
-               
-
+                configbulider.InitConfig((containerbuilder) =>
+                {
+                    containerbuilder.RegisterType<DefaultLocalServiceBus>().SingleInstance().AsImplementedInterfaces();
+                    containerbuilder.RegisterType<InMomeryRepository>().SingleInstance().As<IRepository<string, Manager>>();
+                    containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
+                    containerbuilder.RegisterType<ManagerStoreService>().AsImplementedInterfaces();
+                });
             });
 
             ActorProcessRegistry.Instance.AddActor(typeof(RequestActor), new RequestActor());
         }
 
-        static void InitTinyService(Action<ContainerBuilder> action)
-        {
-            var containerbuilder = new ContainerBuilder();
-            action(containerbuilder);
-            var container = containerbuilder.Build();
-            ObjectFactory.SetContainer(new AutofacServiceLocator(container));
-        }
 
-        
+
     }
 }

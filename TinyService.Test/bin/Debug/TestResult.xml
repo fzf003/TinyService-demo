@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="D:\案例\Actor\MiniQuick\TinyService\TinyService.Test\bin\Debug\TinyService.Test.dll" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-06-14" time="23:25:33">
+  <environment nunit-version="2.6.2.12296" clr-version="2.0.50727.5485" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="D:\NUnit-2.6.2\bin" machine-name="LEO-PC" user="Leo" user-domain="Leo-pc" />
+  <culture-info current-culture="zh-CN" current-uiculture="zh-CN" />
+  <test-suite type="Assembly" name="D:\案例\Actor\MiniQuick\TinyService\TinyService.Test\bin\Debug\TinyService.Test.dll" executed="True" result="Success" success="True" time="0.045" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="TinyService" executed="True" result="Success" success="True" time="0.045" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Test" executed="True" result="Success" success="True" time="0.044" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Repository" executed="True" result="Success" success="True" time="0.044" asserts="0">
+                <results>
+                  <test-suite type="TestFixture" name="RepositoryTestCase" executed="True" result="Success" success="True" time="0.044" asserts="0">
+                    <results>
+                      <test-case name="TinyService.Test.Repository.RepositoryTestCase.Ef_Repository_TestCase" executed="True" result="Success" success="True" time="0.042" asserts="0" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

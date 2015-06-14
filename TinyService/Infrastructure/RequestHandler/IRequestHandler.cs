@@ -9,6 +9,13 @@ namespace TinyService.Infrastructure.RequestHandler
     public interface IRequest { }
 
 
+    public interface IRequest<T>
+    {
+        T Response { get; set; }
+    }
+
+
+
     public interface IRequestHandler<TRequest, TResponse>
         where TRequest : class,IRequest
         where TResponse : class
@@ -18,12 +25,25 @@ namespace TinyService.Infrastructure.RequestHandler
 
     }
 
+    public interface IRequestHandler<TRequest>
+         where TRequest:class,IRequest
+    {
+        void Handle(TRequest message);
+    }
+
 
     public interface IAsyncRequestHandler<TRequest, TResponse>
         where TRequest : class,IRequest
         where TResponse : class
     {
         Task<TResponse> HandleAsync(TRequest message);
+    }
+
+    public interface IAsyncRequestHandler<TRequest>
+        where TRequest : class,IRequest
+         
+    {
+        Task HandleAsync(TRequest message);
     }
    
 

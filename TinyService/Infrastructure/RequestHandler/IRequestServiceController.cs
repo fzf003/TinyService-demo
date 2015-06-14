@@ -14,5 +14,7 @@ namespace TinyService.Infrastructure.RequestHandler
         System.Threading.Tasks.Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request)
             where TRequest : class, IRequest
             where TResponse : class;
+
+         
     }
 }
