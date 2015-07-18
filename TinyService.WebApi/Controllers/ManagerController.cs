@@ -13,15 +13,18 @@
     using TinyService.Infrastructure.RequestHandler;
     using TinyService.Infrastructure.RegisterCenter;
     using TinyService.WebApi.Handler;
+    using System;
+    using TinyService.Infrastructure.Log;
 
     public class ManagerController : ApiController
     {
 
         private readonly IRequestServiceController _servicecontroller;
+        private readonly ILogger Logger ;
         public ManagerController()
             : this(ObjectFactory.GetService<IRequestServiceController>())
         {
-
+            Logger=ObjectFactory.GetService<ILoggerFactory>().Create(typeof(ManagerController));
         }
 
         public ManagerController(IRequestServiceController servicecontroller)
@@ -30,9 +33,11 @@
         }
 
         [Route("api/Manager")]
-        public IHttpActionResult GetManagerList()
+        public async Task< IHttpActionResult> GetManagerList()
         {
-            var result = this._servicecontroller.Send<QueryAllManager, IList<Manager>>(new QueryAllManager());
+           
+            var result = await this._servicecontroller.SendAsync<QueryAllManager, IList<Manager>>(new QueryAllManager());
+            Logger.Info(Newtonsoft.Json.JsonConvert.SerializeObject(result));
             return Ok(result);
         }
         [Route("api/Add")]
@@ -55,5 +60,6 @@
 
             return this.Ok(  new { Total=count  });
         }
+ 
     }
 }

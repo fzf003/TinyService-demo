@@ -1,0 +1,5 @@
+INFO  2015-07-18 11:36:38,106 [623  ] ice.WebApi.Controllers.ManagerController - [{"Title":"我是管理者","ID":"05060861178241f4bf580c342537e3df"}]
+INFO  2015-07-18 11:36:43,169 [646  ] ice.WebApi.Controllers.ManagerController - [{"Title":"我是管理者","ID":"88078f0cbdb44eaa82eb083a9caaf55e"},{"Title":"我是管理者","ID":"05060861178241f4bf580c342537e3df"}]
+INFO  2015-07-18 11:37:23,527 [623  ] ice.WebApi.Controllers.ManagerController - [{"Title":"我是管理者","ID":"88078f0cbdb44eaa82eb083a9caaf55e"},{"Title":"我是管理者","ID":"05060861178241f4bf580c342537e3df"}]
+INFO  2015-07-18 11:37:46,999 [649  ] ice.WebApi.Controllers.ManagerController - [{"Title":"我是管理者","ID":"88078f0cbdb44eaa82eb083a9caaf55e"},{"Title":"我是管理者","ID":"05060861178241f4bf580c342537e3df"}]
+INFO  2015-07-18 11:37:52,909 [646  ] ice.WebApi.Controllers.ManagerController - [{"Title":"我是管理者","ID":"ea1b08afa0e0452f8a6d8aef3cbdc9b8"},{"Title":"我是管理者","ID":"88078f0cbdb44eaa82eb083a9caaf55e"},{"Title":"我是管理者","ID":"05060861178241f4bf580c342537e3df"}]

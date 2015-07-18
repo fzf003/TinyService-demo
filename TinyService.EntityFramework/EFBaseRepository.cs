@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TinyService.Domain.Entities;
 using TinyService.Domain.Repository;
 using EntityFramework.Extensions;
+using TinyService.Infrastructure.CommonComposition;
 namespace TinyService.EntityFramework
 {
     public interface IEFRepository<TId, TEntity>:IRepository<TId, TEntity>,IDisposable
@@ -15,6 +16,7 @@ namespace TinyService.EntityFramework
         DbContext Context { get; }
     }
 
+     [Component]
     public class EFRepository<TId, TEntity> : AbstractRepository<TId, TEntity>, IEFRepository<TId, TEntity>
         where TEntity : class,IEntity<TId>
     {

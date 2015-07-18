@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TinyService.Infrastructure;
+using TinyService.Infrastructure.CommonComposition;
 using TinyService.Infrastructure.RequestHandler;
 
 namespace TinyService.Service
 {
+     [Component(IsSingleton = true)]
     public class DefaultRequestServiceController : AbstractRequestServiceController
     {
         protected override IAsyncRequestHandler<TRequest, TResponse> GetAsyncCommandHandler<TRequest, TResponse>()

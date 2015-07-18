@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using TinyService.Domain.Repository;
+using TinyService.Infrastructure.CommonComposition;
 using TinyService.WebApi.Domain;
 
 namespace TinyService.WebApi.Repository
 {
+     [Component]
     public class InMomeryRepository : AbstractRepository<string, Manager>
     {
         static IDictionary<string, Manager> store = new ConcurrentDictionary<string, Manager>();

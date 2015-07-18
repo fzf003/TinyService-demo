@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=59d6d24383174ac4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -72,8 +75,18 @@
     <Compile Include="Infrastructure\CommonComposition\NamedAttribute.cs" />
     <Compile Include="Infrastructure\IObjectContainer.cs" />
     <Compile Include="Infrastructure\IServiceBus.cs" />
+    <Compile Include="Infrastructure\Log\ILoggerFactory.cs" />
+    <Compile Include="Infrastructure\Log\ILogger.cs" />
     <Compile Include="Infrastructure\ObjectFactory.cs" />
     <Compile Include="Infrastructure\Process\Actor.cs" />
+    <Compile Include="Infrastructure\Proxy\ServiceProxyContainerExtensions.cs" />
+    <Compile Include="Infrastructure\Proxy\IInterceptorProxy.cs" />
+    <Compile Include="Infrastructure\Proxy\InterceptorAttribute.cs" />
+    <Compile Include="Infrastructure\Proxy\InterceptorHelper.cs" />
+    <Compile Include="Infrastructure\Proxy\InterceptorInvocation.cs" />
+    <Compile Include="Infrastructure\Proxy\InterceptorProxy.cs" />
+    <Compile Include="Infrastructure\Proxy\IProxyFactory.cs" />
+    <Compile Include="Infrastructure\Proxy\ProxyFactory.cs" />
     <Compile Include="Infrastructure\RegisterCenter\AcorProcessRegistry.cs" />
     <Compile Include="Infrastructure\RegisterCenter\EventHandlerRegistry.cs" />
     <Compile Include="Infrastructure\RequestHandler\AbstractRequestServiceController.cs" />

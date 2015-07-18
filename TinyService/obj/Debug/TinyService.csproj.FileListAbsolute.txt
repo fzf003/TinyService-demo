@@ -15,3 +15,6 @@ D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\System.Reactive.Plat
 D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\Microsoft.Practices.ServiceLocation.dll
 D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
 D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\Microsoft.Practices.ServiceLocation.xml
+D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\Castle.Core.dll
+D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\Castle.Core.xml
+D:\案例\Actor\MiniQuick\TinyService\TinyService\obj\Debug\TinyService.csprojResolveAssemblyReference.cache

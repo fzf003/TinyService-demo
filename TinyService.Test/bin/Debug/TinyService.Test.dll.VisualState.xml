@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1003]D:\案例\Actor\MiniQuick\TinyService\TinyService.Test\bin\Debug\TinyService.Test.dll</TopNode>
+  <SelectedNode>[0-1002]TinyService.Test.Repository.RepositoryTestCase.Ef_Repository_TestCase</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1003]D:\案例\Actor\MiniQuick\TinyService\TinyService.Test\bin\Debug\TinyService.Test.dll" Expanded="true" />
+    <Node UniqueName="[0-1004]TinyService" Expanded="true" />
+    <Node UniqueName="[0-1005]TinyService.Test" Expanded="true" />
+    <Node UniqueName="[0-1006]TinyService.Test.Repository" Expanded="true" />
+    <Node UniqueName="[0-1000]TinyService.Test.Repository.RepositoryTestCase" Expanded="true" />
+  </Nodes>
+</VisualState>

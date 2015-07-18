@@ -7,17 +7,19 @@ using TinyService.Infrastructure.RequestHandler;
 using TinyService.WebApi.Domain;
 using TinyService.Extension.Repository;
 using System.Threading.Tasks;
+using TinyService.Infrastructure.CommonComposition;
 
 namespace TinyService.WebApi.Handler
 {
     public interface IManagerStoreService:IAsyncRequestHandler<AddManager,Result>,
-                                          IRequestHandler<QueryAllManager,IList<Manager>>,
+                                          IAsyncRequestHandler<QueryAllManager, IList<Manager>>,
                                           IAsyncRequestHandler<CountManager, Result>
                                           
     {
 
     }
 
+       [Component]
     public class ManagerStoreService:IManagerStoreService
     {
         private readonly IRepository<string, Manager> _store;
@@ -48,6 +50,11 @@ namespace TinyService.WebApi.Handler
 
 
 
-       
+
+
+        public async Task<IList<Manager>> HandleAsync(QueryAllManager message)
+        {
+            return this._store.GetAll().ToList();
+        }
     }
 }

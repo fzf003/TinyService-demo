@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using TinyService.Domain.Entities;
@@ -14,6 +15,7 @@ namespace TinyService.WebApi.Domain
             this.ID = Guid.NewGuid().ToString("N");
              
         }
+          [Required]
         public string Title { get; set; }
     }
 }

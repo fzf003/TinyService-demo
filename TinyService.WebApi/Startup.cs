@@ -23,6 +23,7 @@ namespace TinyService.WebApi
     using TinyService.WebApi.Domain;
     using TinyService.Infrastructure.RegisterCenter;
     using TinyService.autofac;
+    using TinyService.Infrastructure;
 
     public class Startup
     {
@@ -57,14 +58,24 @@ namespace TinyService.WebApi
             {
                 configbulider.InitConfig((containerbuilder) =>
                 {
-                    containerbuilder.RegisterType<DefaultLocalServiceBus>().SingleInstance().AsImplementedInterfaces();
-                    containerbuilder.RegisterType<InMomeryRepository>().SingleInstance().As<IRepository<string, Manager>>();
-                    containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
-                    containerbuilder.RegisterType<ManagerStoreService>().AsImplementedInterfaces();
+
+                    containerbuilder.RegisterComponents(
+                          Assembly.GetExecutingAssembly(),
+                          Assembly.Load("TinyService"),
+                          Assembly.Load("TinyService.Log4Net"),
+                          Assembly.Load("TinyService.autofac")
+                          );
+
+                    //containerbuilder.RegisterType<DefaultLocalServiceBus>().SingleInstance().AsImplementedInterfaces();
+                    //containerbuilder.RegisterType<InMomeryRepository>().SingleInstance().As<IRepository<string, Manager>>();
+                    //containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
+                    //containerbuilder.RegisterType<ManagerStoreService>().AsImplementedInterfaces();
                 });
             });
 
             ActorProcessRegistry.Instance.AddActor(typeof(RequestActor), new RequestActor());
+
+           
         }
 
 

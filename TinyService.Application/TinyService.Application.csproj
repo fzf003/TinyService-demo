@@ -36,11 +36,8 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="CommonComposition">
-      <HintPath>..\packages\CommonComposition.0.2.4\lib\portable-win+net40+sl50+wp8\CommonComposition.dll</HintPath>
-    </Reference>
-    <Reference Include="CommonComposition.Autofac">
-      <HintPath>..\packages\CommonComposition.Autofac.0.2.4\lib\net40\CommonComposition.Autofac.dll</HintPath>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -68,18 +65,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppMessage.cs" />
+    <Compile Include="StringMethodInterceptor.cs" />
     <Compile Include="Foo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TinyService.Autofac\TinyService.Autofac.csproj">
       <Project>{6ee0312b-5fd8-43fa-8423-95b3e569fd48}</Project>
       <Name>TinyService.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TinyService.Log4Net\TinyService.Log4Net.csproj">
+      <Project>{28ad6dfc-e0b9-450e-a9e9-b5209bf6d765}</Project>
+      <Name>TinyService.Log4Net</Name>
     </ProjectReference>
     <ProjectReference Include="..\TinyService\TinyService.csproj">
       <Project>{c71b12cd-7f25-475a-b63a-018c4f94ff32}</Project>

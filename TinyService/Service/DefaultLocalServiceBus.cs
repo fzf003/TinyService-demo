@@ -7,12 +7,13 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 using TinyService.Infrastructure;
+using TinyService.Infrastructure.CommonComposition;
 using TinyService.Infrastructure.RegisterCenter;
 
 namespace TinyService.Service
 {
-  
 
+     [Component(IsSingleton = true)]
     public class DefaultLocalServiceBus : IServiceBus
     {
         private readonly IDictionary<string, object> _messagehandler;

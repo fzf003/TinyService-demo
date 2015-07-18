@@ -14,7 +14,10 @@ using TinyService.Extension.ServiceBus;
 using System.Threading;
 using System.Reflection;
 using TinyService.autofac;
-using CommonComposition;
+using TinyService.Infrastructure.Proxy;
+using TinyService.Application.Services;
+using TinyService.Infrastructure.Log;
+
 namespace TinyService.Application
 {
     class Program
@@ -34,9 +37,10 @@ namespace TinyService.Application
             {
                 Console.WriteLine(message.Id + "|" + message.Timestamp);
             });
+ 
+                bus.PublishAsync<AppMessage>(new AppMessage() { });
 
-
-            bus.PublishAsync<AppMessage>(new AppMessage() { });
+                ObjectFactory.GetService<ILoggerFactory>().Create("Program").Info("dsdds");
 
             Console.WriteLine("......");
             Console.ReadKey();
@@ -48,9 +52,15 @@ namespace TinyService.Application
             {
                 configbulider.InitConfig((containerbuilder) =>
                   {
-                      containerbuilder.RegisterType<DefaultLocalServiceBus>().SingleInstance().AsImplementedInterfaces();
-                      containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
-                      containerbuilder.RegisterComponents(typeof(Foo).Assembly).InstancePerRequest().AsImplementedInterfaces();
+                      containerbuilder.RegisterComponents(
+                          Assembly.GetExecutingAssembly(),
+                          Assembly.Load("TinyService"),
+                          Assembly.Load("TinyService.Log4Net"),
+                          Assembly.Load("TinyService.autofac")
+
+                         // typeof(ServiceBase).Assembly,
+                          //typeof(ILoggerFactory).Assembly
+                          );
                   })
                   .UseMapper(() => { 
                   
