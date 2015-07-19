@@ -25,7 +25,8 @@ namespace TinyService.Infrastructure.Proxy
 
          protected override void InvokeMethodOnTarget()
         {
-            _parent.Method.Invoke(_parent.InvocationTarget, _parent.Arguments);
+            var result = _parent.Method.Invoke(_parent.InvocationTarget, _parent.Arguments);
+            _parent.ReturnValue = result;
         }
 
          public override object InvocationTarget
