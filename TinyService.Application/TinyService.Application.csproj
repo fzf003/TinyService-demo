@@ -39,9 +39,40 @@
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Diagnostics">
+      <HintPath>..\packages\Microsoft.Owin.Diagnostics.2.1.0\lib\net40\Microsoft.Owin.Diagnostics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.HttpListener">
+      <HintPath>..\packages\Microsoft.Owin.Host.HttpListener.2.1.0\lib\net45\Microsoft.Owin.Host.HttpListener.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting">
+      <HintPath>..\packages\Microsoft.Owin.Hosting.2.1.0\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -65,7 +96,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppMessage.cs" />
-    <Compile Include="StringMethodInterceptor.cs" />
+    <Compile Include="BlogService.cs" />
+    <Compile Include="Hub\ClientHub.cs" />
+    <Compile Include="Startup.cs" />
+    <Compile Include="TestActorService.cs" />
+    <Compile Include="ServiceFactory.cs" />
+    <Compile Include="Interceptor\AuthorizationInterceptor.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\PersonValidator.cs" />
+    <Compile Include="TestModule.cs" />
+    <Compile Include="Interceptor\StringMethodInterceptor.cs" />
     <Compile Include="Foo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,6 +125,14 @@
     <ProjectReference Include="..\TinyService.Log4Net\TinyService.Log4Net.csproj">
       <Project>{28ad6dfc-e0b9-450e-a9e9-b5209bf6d765}</Project>
       <Name>TinyService.Log4Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TinyService.SignalR\TinyService.MessageBus.csproj">
+      <Project>{29f7cea1-6a70-4267-a322-b3efc2d1742a}</Project>
+      <Name>TinyService.MessageBus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TinyService.TinyIoc\TinyService.TinyIoc.csproj">
+      <Project>{d1bd76d6-3b85-4670-883f-8103da98517d}</Project>
+      <Name>TinyService.TinyIoc</Name>
     </ProjectReference>
     <ProjectReference Include="..\TinyService\TinyService.csproj">
       <Project>{c71b12cd-7f25-475a-b63a-018c4f94ff32}</Project>

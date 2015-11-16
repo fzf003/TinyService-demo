@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TinyService.Domain.Entities;
 using TinyService.Domain.Repository;
 using EntityFramework.Extensions;
-using TinyService.Infrastructure.CommonComposition;
+using TinyService.Infrastructure;
 namespace TinyService.EntityFramework
 {
     public interface IEFRepository<TId, TEntity>:IRepository<TId, TEntity>,IDisposable
@@ -35,6 +35,7 @@ namespace TinyService.EntityFramework
         }
         public override TEntity Insert(TEntity entity)
         {
+            
             this._Dbcontext.Set<TEntity>().Add(entity);
             return entity;
         }
@@ -47,12 +48,11 @@ namespace TinyService.EntityFramework
         public override void Delete(TId id)
         {
             this._Dbcontext.Set<TEntity>().Remove(this.Get(id));
-            
         }
 
         public override IQueryable<TEntity> GetAll()
         {
-            return this._Dbcontext.Set<TEntity>().AsQueryable();
+            return  this._Dbcontext.Set<TEntity>().AsQueryable();
         }
 
         public override TEntity Update(TEntity entity)

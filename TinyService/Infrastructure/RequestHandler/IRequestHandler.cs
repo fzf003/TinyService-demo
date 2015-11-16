@@ -9,10 +9,17 @@ namespace TinyService.Infrastructure.RequestHandler
     public interface IRequest { }
 
 
-    public interface IRequest<T>
+    public interface IRequest<out T>:IRequest
     {
-        T Response { get; set; }
+      
     }
+
+ 
+
+    //public interface IRequestHandler<in TRequest, out TResponse> where TRequest : IRequest<TResponse>
+    //{
+    //    TResponse Handle(TRequest request);
+    //}
 
 
 

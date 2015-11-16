@@ -24,6 +24,12 @@ namespace TinyService.WebApi
     using TinyService.Infrastructure.RegisterCenter;
     using TinyService.autofac;
     using TinyService.Infrastructure;
+    using TinyService.Validator;
+    using TinyService.WebApi.Models;
+    using System.Web.Mvc;
+    using TinyService.MessageBus.Impl;
+    using TinyService.MessageBus;
+    using TinyService.MessageBus.Contract;
 
     public class Startup
     {
@@ -43,19 +49,28 @@ namespace TinyService.WebApi
 
             app.UseWebApi(httpConfiguration);
 
-            // Make ./public the default root of the static files in our Web Application.
             app.UseFileServer(new FileServerOptions
             {
                 RequestPath = new PathString(string.Empty),
                 FileSystem = new PhysicalFileSystem("./public"),
                 EnableDirectoryBrowsing = true,
             });
-
+            
             app.UseStageMarker(PipelineStage.MapHandler);
             httpConfiguration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
-            TinyServiceSetup.Start((configbulider) =>
+
+           
+
+            TinyServiceSetup.Instance.Start((configbulider) =>
             {
+                  var config= new MessageBusConfiguration()
+                                   {
+                                       HubName = "ClientHub",
+                                       QueryString = string.Empty,
+                                       RemoteUrl = "http://localhost:9090/"
+                                   };
+
                 configbulider.InitConfig((containerbuilder) =>
                 {
 
@@ -65,17 +80,45 @@ namespace TinyService.WebApi
                           Assembly.Load("TinyService.Log4Net"),
                           Assembly.Load("TinyService.autofac")
                           );
+                     
 
-                    //containerbuilder.RegisterType<DefaultLocalServiceBus>().SingleInstance().AsImplementedInterfaces();
-                    //containerbuilder.RegisterType<InMomeryRepository>().SingleInstance().As<IRepository<string, Manager>>();
-                    //containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
-                    //containerbuilder.RegisterType<ManagerStoreService>().AsImplementedInterfaces();
+                         containerbuilder.Register(p=>new DefaultMessageBus(config))
+                                         .AsImplementedInterfaces()
+                                         .SingleInstance();
+
+             
+                   
+                   
+                       
+          
                 });
             });
 
-            ActorProcessRegistry.Instance.AddActor(typeof(RequestActor), new RequestActor());
+          /*  var bus= ObjectFactory.GetService<IMessageBus>();
 
-           
+            bus.ErrorAsObservable().Subscribe((ex) =>
+           {
+               Console.WriteLine("Err:" + ex.Message);
+           });
+
+            bus.Subscribe<AppMessage>("Close", (message) =>
+            {
+                Console.WriteLine("关闭收到:" + message.Name + "|" + message.messageId);
+            });
+
+            bus.Subscribe<AppMessage>("Notify", (message) =>
+            {
+                Console.WriteLine("Notify收到:" + message.Name + "|" + message.messageId);
+            });
+
+            bus.Subscribe<AppMessage>("Receive", (message) =>
+            {
+                Console.WriteLine("Receive收到:" + message.Name + "|" + message.messageId);
+            });
+
+            bus.Start().Wait();*/
+
+        
         }
 
 

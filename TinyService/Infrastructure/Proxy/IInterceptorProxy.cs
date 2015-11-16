@@ -12,5 +12,7 @@ namespace TinyService.Infrastructure.Proxy
     {
         
         IServiceLocator Container { get; set; }
+
+        List<IInterceptor> Interceptorstore { get;  }
     }
 }

@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TinyService.Infrastructure.CommonComposition;
+using TinyService.Infrastructure;
 using TinyService.Infrastructure.Log;
 
 namespace TinyService.Log4Net
@@ -16,6 +16,11 @@ namespace TinyService.Log4Net
     [Component(IsSingleton = true)]
     public class Log4NetLoggerFactory : ILoggerFactory
     {
+        public Log4NetLoggerFactory()
+            : this("log4net.config")
+        {
+
+        }
 
         public Log4NetLoggerFactory(string configFile = "log4net.config")
         {

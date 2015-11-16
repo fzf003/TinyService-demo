@@ -7,24 +7,22 @@ using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
 using TinyService.Infrastructure;
-using TinyService.Infrastructure.CommonComposition;
 using TinyService.Infrastructure.RegisterCenter;
 
 namespace TinyService.Service
 {
 
-     [Component(IsSingleton = true)]
+    [Component(IsSingleton = true)]
     public class DefaultLocalServiceBus : IServiceBus
     {
         private readonly IDictionary<string, object> _messagehandler;
 
         private readonly EventHandlerRegistry _eventsobservables = EventHandlerRegistry.Instance;
-        private CompositeDisposable socketDisposable;
+        private CompositeDisposable disposables;
         public DefaultLocalServiceBus()
         {
             _messagehandler = new ConcurrentDictionary<string, object>();
-            socketDisposable = new CompositeDisposable();
-
+            disposables = new CompositeDisposable();
         }
 
         public IDisposable RegisterMessageHandler<TCommand>(Action<TCommand> handler) where TCommand : class
@@ -37,23 +35,24 @@ namespace TinyService.Service
         public IDisposable RegisterMessageHandler<TCommand>(IObserver<TCommand> observer) where TCommand : class
         {
             this._messagehandler[typeof(TCommand).Name] = observer;
-            var disp= Disposable.Create(() =>
+            var disposable = Disposable.Create(() =>
             {
                 var observerhandler = (this._messagehandler[typeof(TCommand).Name] as IObserver<TCommand>);
                 observerhandler.OnCompleted();
                 this._messagehandler.Remove(typeof(TCommand).Name);
-                
             });
 
-            socketDisposable.Add(disp);
-            return disp;
+            disposables.Add(disposable);
+            return disposable;
 
         }
 
         public void Send<TCommand>(TCommand message) where TCommand : class
         {
             var typename = message.GetType().Name;
+
             object observer;
+
             if (this._messagehandler.TryGetValue(typename, out observer))
             {
                 ((IObserver<TCommand>)observer).OnNext(message);
@@ -64,8 +63,11 @@ namespace TinyService.Service
         {
             Parallel.ForEach(this._eventsobservables.GetEventHandler(typeof(T)), (item) =>
             {
-                var observer = (ISubject<T>)item;
-                observer.OnNext(message);
+                if (item != null)
+                {
+                    var observer = (ISubject<T>)item;
+                    observer.OnNext(message);
+                }
             });
         }
 
@@ -74,19 +76,16 @@ namespace TinyService.Service
             var subject = new Subject<T>();
             this._eventsobservables.AddEventHandler(typeof(T), subject);
             var disp=subject.Subscribe(handler);
-            socketDisposable.Add(disp);
+            disposables.Add(disp);
             return disp;
         }
 
-
-
-
+ 
         public void Dispose()
         {
-            socketDisposable.Dispose();
+            disposables.Dispose();
             this._eventsobservables.Subjects.Clear();
             _messagehandler.Clear();
-
-        }
+         }
     }
 }

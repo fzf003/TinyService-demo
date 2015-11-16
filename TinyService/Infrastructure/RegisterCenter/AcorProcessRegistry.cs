@@ -8,7 +8,7 @@ using TinyService.Infrastructure.Process;
 
 namespace TinyService.Infrastructure.RegisterCenter
 {
-    public class ActorProcessRegistry
+   /* public class ActorProcessRegistry
     {
         private static volatile ActorProcessRegistry _Instance;
 
@@ -86,5 +86,5 @@ namespace TinyService.Infrastructure.RegisterCenter
                 return this._subjects;
             }
         }
-    }
+    }*/
 }

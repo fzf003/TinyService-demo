@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace TinyService.Application
 {
-    public class AppMessage:Message
+    public class ApplicationMessage:Message
     {
+        public ApplicationMessage() : base() { }
+
+        public string Name { get; set; }
+
 
     }
 }

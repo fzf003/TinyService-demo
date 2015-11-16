@@ -8,7 +8,7 @@ namespace TinyService.autofac
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using TinyService.Infrastructure.CommonComposition;
+    using TinyService.Infrastructure;
 
     public static class CompositionExtensions
     {

@@ -16,7 +16,19 @@ namespace TinyService.Extension.ServiceBus
             return Task.Factory.FromAsync(sendaction.BeginInvoke, sendaction.EndInvoke, null);
         }
 
-        public static IDisposable Subscribe<T>(this IServiceBus bus, Action<T> action)
+        public static Task PublishAsync<T>(this IServiceBus bus,IEnumerable< T> messages)
+        {
+            var sendaction = new Action(() => {
+                foreach (var message in messages)
+                {
+                    bus.Publish<T>(message);
+                }
+            
+            });
+            return Task.Factory.FromAsync(sendaction.BeginInvoke, sendaction.EndInvoke, null);
+        }
+
+        public static IDisposable ToSubscribe<T>(this IServiceBus bus, Action<T> action)
         {
             return bus.Subscribe(new Handler<T>(action));
         }
@@ -26,7 +38,7 @@ namespace TinyService.Extension.ServiceBus
             return Task.Run(() => { bus.Send<T>(message); });
         }
 
-        public static IDisposable Subscribe<T>(this IObservable<T> self, Action<T> action)
+        public static IDisposable ToSubscribe<T>(this IObservable<T> self, Action<T> action)
         {
             return self.Subscribe(new Handler<T>(action));
         }

@@ -33,5 +33,7 @@ namespace TinyService.Infrastructure.Proxy
         public Type InterceptorType { get; private set; }
 
         public int Order { get; set; }
+
+     
     }
 }

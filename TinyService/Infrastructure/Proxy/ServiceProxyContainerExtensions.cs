@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using Castle.DynamicProxy;
+using Microsoft.Practices.ServiceLocation;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace TinyService.Infrastructure.Proxy
             ServiceLocator.SetLocatorProvider(() => serviceContainer);
         }
 
-        public static T CreateProxy<T>(this T objectservice)
+        public static T CreateProxy<T>(this T objectservice, params IInterceptor[] interceptor)
         {
             object result = default(T);
             if (dic.TryGetValue(typeof(T).FullName, out result))
@@ -30,10 +31,12 @@ namespace TinyService.Infrastructure.Proxy
             }
             else
             {
+
                 var interceptorProxy = new InterceptorProxy { Container = ServiceLocator.Current };
                 IProxyFactory _proxyFactory = ServiceLocator.Current.GetInstance<IProxyFactory>();
-                var proxy = _proxyFactory
-                    .CreateProxy(ServiceLocator.Current.GetInstance<T>(), interceptorProxy);
+                //
+                var proxy = _proxyFactory.CreateProxy(ServiceLocator.Current.GetInstance<T>(), interceptorProxy);
+                     
                 result = proxy;
                 dic.TryAdd(typeof(T).FullName, proxy);
             }

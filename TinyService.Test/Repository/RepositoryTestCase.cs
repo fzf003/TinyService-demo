@@ -26,15 +26,22 @@ namespace TinyService.Test.Repository
         public void Init()
         {
 
-            TinyServiceSetup.Start((configbulider) =>
+        
+ 
+          TinyServiceSetup.Instance.Start((configbulider) =>
             {
                 configbulider.InitConfig((containerbuilder) =>
                 {
+
                     containerbuilder.RegisterType<UserRepository>().As<IRepository<string, User>>().InstancePerDependency();
                     containerbuilder.RegisterGeneric(typeof(EFRepository<,>)).As(typeof(IEFRepository<,>))
-                                    .WithParameter("dbcontext", new pmContext()).InstancePerDependency();
+                                    .WithParameter("dbcontext", new pmContext())
+                                    .InstancePerDependency();
+
                 });
             });
+
+
             this._repository = ObjectFactory.GetService<IRepository<string, User>>();
             this._efrepository = ObjectFactory.GetService<IEFRepository<int, Product>>();
         }
@@ -79,7 +86,7 @@ namespace TinyService.Test.Repository
         public void End()
         {
             this._efrepository.Dispose();
-            TinyServiceSetup.Container.Dispose();
+             
         }
     }
 }

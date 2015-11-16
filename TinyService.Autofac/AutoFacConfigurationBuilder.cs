@@ -11,7 +11,6 @@ namespace TinyService.autofac
     public interface IConfigurationBuilder
     {
         IConfigurationBuilder InitConfig(Action<Autofac.ContainerBuilder> initializer);
-
         
     }
 

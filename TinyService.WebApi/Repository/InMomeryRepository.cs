@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using TinyService.Domain.Repository;
-using TinyService.Infrastructure.CommonComposition;
+using TinyService.Infrastructure;
 using TinyService.WebApi.Domain;
 
 namespace TinyService.WebApi.Repository
 {
-     [Component]
+     [Component(IsSingleton=true)]
     public class InMomeryRepository : AbstractRepository<string, Manager>
     {
         static IDictionary<string, Manager> store = new ConcurrentDictionary<string, Manager>();
@@ -18,7 +18,7 @@ namespace TinyService.WebApi.Repository
         {
             Delete(store[id]);
         }
-        public override void Delete(Manager entity)
+        public override void Delete( Manager entity)
         {
             store.Remove(entity.ID);
         }

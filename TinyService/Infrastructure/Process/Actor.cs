@@ -9,7 +9,7 @@ using TinyService.Infrastructure.RegisterCenter;
 
 namespace TinyService.Infrastructure.Process
 {
-    public abstract class Actor
+   /* public abstract class Actor
     {
         private readonly ActionBlock<Message.Message> _action;
 
@@ -50,5 +50,5 @@ namespace TinyService.Infrastructure.Process
 
 
 
-    }
+    }*/
 }

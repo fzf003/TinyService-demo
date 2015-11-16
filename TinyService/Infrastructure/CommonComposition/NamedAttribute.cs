@@ -1,4 +1,4 @@
-namespace TinyService.Infrastructure.CommonComposition
+namespace TinyService.Infrastructure
 {
     using System;
 

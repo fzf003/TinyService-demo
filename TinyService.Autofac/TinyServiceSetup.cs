@@ -2,35 +2,72 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TinyService.Infrastructure;
+using TinyService.Modules;
 
 namespace TinyService.autofac
 {
-    public static class TinyServiceSetup
+    public  class TinyServiceSetup
     {
-        private static IObjectContainer _container;
+        static Lazy<TinyServiceSetup> _instance = new Lazy<TinyServiceSetup>(() => new TinyServiceSetup());
 
+      
 
-        public static IObjectContainer Container
+        private TinyServiceSetup()
         {
-            get { return _container; }
+
+        }
+        public static TinyServiceSetup Instance
+        {
+            get
+            {
+                return _instance.Value;
+            }
+        }
+        public IContainer Container
+        {
+            get;
+            set;
         }
 
-        public static void Start(Action<IConfigurationBuilder> configurator)
+        public  TinyServiceSetup Start(Action<IConfigurationBuilder> configurator)
         {
             var builder = new ContainerBuilder();
             var config = new AutoFacConfigurationBuilder(builder);
             configurator(config);
-            SetContainer(new AutofacAdapter(builder));
+            var adapter= new AutofacAdapter(builder);
+            this.Container = adapter.Container;
+            ObjectFactory.SetContainer(new AutofacServiceLocator(adapter.Container));
+            return this;
         }
 
-
-        internal static void SetContainer(IObjectContainer container)
+        public  TinyServiceSetup Start(Action action)
         {
-            _container = container;
-            ObjectFactory.SetContainer(new AutofacServiceLocator(((AutofacAdapter)container).Container));
+            action();
+
+            return this;
+                
         }
+
+        //public TinyServiceSetup RegisterModule(params Assembly[] assemblyes)
+        //{
+        //    //assemblyes.SelectMany(p => p.GetTypes())
+        //    //          .Where(p => this.IsModule(p))
+        //    //          .ToList().ForEach(p=>p.);
+        //    return this;
+        //}
+
+        bool IsModule(Type type)
+        {
+            return
+                type.IsClass &&
+                !type.IsAbstract &&
+                typeof(TinyModule).IsAssignableFrom(type);
+        }
+
+     
     }
 }
