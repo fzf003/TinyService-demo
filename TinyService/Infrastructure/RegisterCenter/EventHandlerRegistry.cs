@@ -54,9 +54,7 @@ namespace TinyService.Infrastructure.RegisterCenter
                     }
                 }
             }
-
-
-
+ 
         }
 
         public List<object> GetEventHandler(Type type)

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
-using TinyService.Infrastructure.Message;
+using TinyService.Infrastructure;
 
 namespace TinyService.Infrastructure.Process.Actor
 {
@@ -22,7 +22,7 @@ namespace TinyService.Infrastructure.Process.Actor
 
         public Actor(Uri uri, ActorApplication factory)
         {
-            _actorhandler = new ActionBlock<ActorMessage>(message =>
+            _actorhandler = new ActionBlock<ActorMessage>(async message =>
             {
                 dynamic self = this;
                 dynamic mess = message;

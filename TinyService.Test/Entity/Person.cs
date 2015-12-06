@@ -7,8 +7,15 @@ using TinyService.Domain.Entities;
 
 namespace TinyService.Test.Entity
 {
-    public  class Person : Entity<int>
+    public  class Person : AggregateRoot<int>
     {
+        public override int Id
+        {
+            get
+            {
+                return base.Id;
+            }
+        }
         public Person()
         {
             this.Products1 = new List<Product>();
@@ -21,8 +28,15 @@ namespace TinyService.Test.Entity
         public virtual ICollection<Product> Products1 { get; set; }
     }
 
-    public  class Product : Entity<int>
+    public class Product : AggregateRoot<int>
     {
+        public override int Id
+        {
+            get
+            {
+                return base.Id;
+            }
+        }
         //public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<int> Person_id { get; set; }

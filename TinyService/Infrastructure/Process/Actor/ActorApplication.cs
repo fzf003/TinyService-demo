@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using TinyService.Infrastructure.Message;
+using TinyService.Infrastructure;
 
 namespace TinyService.Infrastructure.Process.Actor
 {

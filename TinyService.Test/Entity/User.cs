@@ -7,8 +7,15 @@ using TinyService.Domain.Entities;
 
 namespace TinyService.Test.Entity
 {
-    public class User:Entity<string>
+    public class User:AggregateRoot<string>
     {
+        public override string Id
+        {
+            get
+            {
+                return Guid.NewGuid().ToString("N");
+            }
+        }
         public string Name { get; set; }
 
         public int Age { get; set; }
@@ -17,8 +24,7 @@ namespace TinyService.Test.Entity
         {
             this.Name = name;
             this.Age = age;
-            this.ID = Guid.NewGuid().ToString("N");
-        }
+         }
 
         public void ChangeName(string _name)
         {

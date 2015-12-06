@@ -16,7 +16,7 @@ namespace TinyService.Application
     {
         public void Configuration(IAppBuilder app)
         {
-       
+
             //GlobalHost.DependencyResolver.UseRedis("127.0.0.1", 6379, string.Empty, "SignalRBus");
 
             var configuration = new HubConfiguration() { EnableDetailedErrors = true, EnableJSONP = true };
@@ -35,12 +35,12 @@ namespace TinyService.Application
                         Assembly.Load("TinyService"),
                         Assembly.Load("TinyService.Log4Net")
                          );
- 
+
                     containerbuilder.RegisterInstance(ActorApplication.Instanse);
                     containerbuilder.Register<TestActorService>(p => new TestActorService(p.Resolve<ActorApplication>()));
-                     containerbuilder.RegisterType<BlogService>().AsImplementedInterfaces();
+                    containerbuilder.RegisterType<BlogService>().AsImplementedInterfaces();
 
-                 });
+                });
 
             });
         }

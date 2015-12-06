@@ -35,3 +35,5 @@ D:\案例\Actor\MiniQuick\TinyService\TinyService.TinyIoc\bin\Debug\pt\FluentVal
 D:\案例\Actor\MiniQuick\TinyService\TinyService.TinyIoc\bin\Debug\ru\FluentValidation.resources.dll
 D:\案例\Actor\MiniQuick\TinyService\TinyService.TinyIoc\bin\Debug\sv\FluentValidation.resources.dll
 D:\案例\Actor\MiniQuick\TinyService\TinyService.TinyIoc\bin\Debug\tr\FluentValidation.resources.dll
+D:\案例\Actor\MiniQuick\TinyService\TinyService.TinyIoc\bin\Debug\System.Reactive.PlatformServices.dll
+D:\案例\Actor\MiniQuick\TinyService\TinyService.TinyIoc\bin\Debug\System.Reactive.PlatformServices.xml

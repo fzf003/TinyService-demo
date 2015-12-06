@@ -12,7 +12,7 @@ namespace TinyService.Test.Entity.Map
         public PersonMap()
         {
             // Primary Key
-            this.HasKey(t => t.ID);
+            this.HasKey(t => t.Id);
 
             // Properties
             this.Property(t => t.PersonName)
@@ -23,7 +23,7 @@ namespace TinyService.Test.Entity.Map
 
             // Table & Column Mappings
             this.ToTable("Person");
-            this.Property(t => t.ID).HasColumnName("Id");
+            this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.PersonName).HasColumnName("PersonName");
             this.Property(t => t.Products).HasColumnName("Products");
             this.Property(t => t.Title).HasColumnName("Title");
@@ -35,7 +35,7 @@ namespace TinyService.Test.Entity.Map
         public ProductMap()
         {
             // Primary Key
-            this.HasKey(t => t.ID);
+            this.HasKey(t => t.Id);
 
             // Properties
             this.Property(t => t.Name)
@@ -43,7 +43,7 @@ namespace TinyService.Test.Entity.Map
 
             // Table & Column Mappings
             this.ToTable("Product");
-            this.Property(t => t.ID).HasColumnName("Id");
+            this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.Person_id).HasColumnName("Person_id");
 

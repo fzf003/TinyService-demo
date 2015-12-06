@@ -5,12 +5,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using TinyService.Infrastructure;
-using TinyService.Infrastructure.Message;
+
 using TinyService.Infrastructure.Process.Actor;
 
 namespace TinyService.Application
 {
-     
     public class TestActorService : Actor
     {
 
@@ -18,33 +17,34 @@ namespace TinyService.Application
             : this(null, factory)
         {
         }
+
         public TestActorService(Uri uri, ActorApplication factory)
             : base(uri, factory)
         {
         }
-         
+
 
         public async Task Handle(AddMessage message)
         {
-          
-            var result= await Task.FromResult("TestActorService:" + message.Timestamp + "---" + message.Id + "|" + message.Timestamp + "|" + this.Uri.ToString()+"==="+Thread.CurrentThread.ManagedThreadId);
+            //await Task.Delay(1000);
+            var result = await Task.FromResult("TestActorService:" + message.Index + "---" + message.Id + "|" + message.Timestamp + "|" + this.Uri.ToString() + "===" + Thread.CurrentThread.ManagedThreadId);
             Console.WriteLine(result);
         }
 
         public async Task Handle(UpdateMessage message)
         {
-
             var result = await Task.FromResult("TestActorService000:" + message.Timestamp + "---" + message.Id + "|" + message.Timestamp + "|" + this.Uri.ToString() + "===" + Thread.CurrentThread.ManagedThreadId);
             Console.WriteLine(result);
         }
     }
 
-    public class AddMessage:ActorMessage
+    public class AddMessage : ActorMessage
     {
         public AddMessage(string actorname)
         {
             this.To = new Address(actorname);
         }
+        public int Index { get; set; }
     }
 
     public class UpdateMessage : ActorMessage

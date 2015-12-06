@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TinyService.Infrastructure.Message
+namespace TinyService.Infrastructure
 {
     public interface IMessage<T>
     {
@@ -12,7 +12,12 @@ namespace TinyService.Infrastructure.Message
         DateTime Timestamp { get; set; }
     }
 
-    public abstract class Message : IMessage<string>
+    public interface IMessage:IMessage<string>
+    {
+
+    }
+
+    public abstract class Message : IMessage
     {
 
         public Message()

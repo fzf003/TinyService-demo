@@ -9,7 +9,7 @@ using TinyService.Domain.Entities;
 namespace TinyService.Domain.Repository
 {
     public abstract class AbstractRepository<TId, TEntity> : IRepository<TId, TEntity>
-         where TEntity : class,IEntity<TId>
+         where TEntity : class,IAggregateRoot<TId>
     {
         public abstract IQueryable<TEntity> GetAll();
 
@@ -34,7 +34,7 @@ namespace TinyService.Domain.Repository
             return this.GetAll().FirstOrDefault(predicate);
         }
 
-        public abstract  TEntity Insert(TEntity entity);
+        public abstract TEntity Insert(TEntity entity);
 
 
         public abstract TEntity Update(TEntity entity);
@@ -54,14 +54,16 @@ namespace TinyService.Domain.Repository
 
         public virtual void Delete(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
         {
-            GetAll().Where(predicate).ToList().ForEach(entity=>{
-             Delete(entity);
+            GetAll().Where(predicate).ToList().ForEach(entity =>
+            {
+                Delete(entity);
             });
         }
 
         public virtual TEntity InsertOrUpdate(TEntity entity)
         {
-            return EqualityComparer<TId>.Default.Equals(entity.ID, default(TId))
+            return
+                EqualityComparer<TId>.Default.Equals(entity.Id, default(TId))
                 ? Insert(entity)
                 : Update(entity);
         }
@@ -88,8 +90,5 @@ namespace TinyService.Domain.Repository
 
             return Expression.Lambda<Func<TEntity, bool>>(lambdaBody, lambdaParam);
         }
-
-
-       
-    }
+     }
 }

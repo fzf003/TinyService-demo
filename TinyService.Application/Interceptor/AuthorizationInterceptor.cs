@@ -21,7 +21,6 @@ namespace TinyService.Application
 
         public override void Intercept(IInvocation invocation)
         {
-            
             try
             {
                 //if (invocation.ReturnValue.GetType() == typeof(string))

@@ -11,14 +11,14 @@ using TinyService.Infrastructure;
 namespace TinyService.EntityFramework
 {
     public interface IEFRepository<TId, TEntity>:IRepository<TId, TEntity>,IDisposable
-        where TEntity : class,IEntity<TId>
+        where TEntity : class,IAggregateRoot<TId>
     {
         DbContext Context { get; }
     }
 
      [Component]
     public class EFRepository<TId, TEntity> : AbstractRepository<TId, TEntity>, IEFRepository<TId, TEntity>
-        where TEntity : class,IEntity<TId>
+        where TEntity : class,IAggregateRoot<TId>
     {
         private readonly DbContext _Dbcontext;
         public EFRepository(DbContext dbcontext)

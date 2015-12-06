@@ -35,7 +35,9 @@ namespace TinyService.Extension.ServiceBus
 
         public static Task SendAsync<T>(this IServiceBus bus, T message) where T : class
         {
-            return Task.Run(() => { bus.Send<T>(message); });
+            return Task.Run(() => {
+                bus.Send<T>(message);
+            });
         }
 
         public static IDisposable ToSubscribe<T>(this IObservable<T> self, Action<T> action)

@@ -38,8 +38,5 @@ namespace TinyService.Infrastructure.Process.Actor
         {
             return !_addresses.ContainsKey(address);
         }
-
-
-       
-    }
+     }
 }

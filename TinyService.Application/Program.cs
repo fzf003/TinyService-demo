@@ -32,25 +32,55 @@ using Microsoft.Owin.Hosting;
 using TinyService.MessageBus.Contract;
 using TinyService.MessageBus.Impl;
 using TinyService.MessageBus;
+using TinyService.Command.Impl;
+using TinyService.Command;
+using TinyService.DomainEvent.Impl;
+using TinyService.Application.Models.DomainEvent;
+using System.Runtime.Serialization;
+using TinyService.Domain.Entities;
+using TinyService.Application.Models.Command;
+using TinyService.Domain.Repository;
+using TinyService.DomainEvent;
+using TinyService.Extension.Repository;
 namespace TinyService.Application
 {
     class Program
     {
-        static ProxyGenerator proxyGenerator = new ProxyGenerator();
 
         static void Main(string[] args)
         {
+            Init();
 
-            using (WebApp.Start<Startup>("http://localhost:9090/"))
-            {
-                
-                Console.WriteLine("Server running at http://localhost:9090/");
-                Console.ReadKey();
-            }
+           var bus = ObjectFactory.GetService<IDefaultServiceBus>();
 
+           var eventhandler = ObjectFactory.GetService<IDomainEventHandler<InventoryItemCreated>>();
+            
+            bus.ToSubscribe<InventoryItemCreated>(new Handler<InventoryItemCreated>(eventhandler.Handle));
 
+            var rename = bus.ToSubscribe(new Handler<InventoryItemRenamed>( ObjectFactory.GetService<IDomainEventHandler<InventoryItemRenamed>>().Handle));
+ 
+            Enumerable.Range(1, 10).Select(p => new CreateItemCommand()
+                {
+                    Name = string.Format("fzf{0}" , p)
+                })
+                .Select(p => bus.SendAsync(p))
+                .Select(p => p.ToObservable().Subscribe(k =>
+                {
+                    Console.WriteLine("index:{0}", k.Status + "|" + k.ErrorMessage);
+                }))
+                .ToArray();
+ 
+
+            //using (WebApp.Start<Startup>("http://localhost:9090/"))
+            //{
+            //    Console.WriteLine("Server running at http://localhost:9090/");
+            //    Console.ReadKey();
+            //}
+
+            Console.WriteLine("================");
             Console.WriteLine("......");
             Console.ReadKey();
+
         }
 
         static void Validator()
@@ -72,7 +102,6 @@ namespace TinyService.Application
 
         static void ServiceBus()
         {
-           
             var bus = ObjectFactory.GetService<IServiceBus>();
 
             bus.ToSubscribe<AppMessage>((item) =>
@@ -82,21 +111,13 @@ namespace TinyService.Application
 
             bus.RegisterMessageHandler<AppMessage>(message =>
             {
-                Console.WriteLine(message.Id + "|" + message.Timestamp+"|"+Thread.CurrentThread.ManagedThreadId);
+                Console.WriteLine(message.Id + "|" + message.Timestamp + "|" + Thread.CurrentThread.ManagedThreadId);
             });
 
+
           
-                List<AppMessage> store=new List<AppMessage>();
-                store.Add(new AppMessage() { 
-                
-                });
 
-                bus.Send(new AppMessage()
-                {
 
-                });
-         
-            
 
         }
 
@@ -111,8 +132,8 @@ namespace TinyService.Application
 
             //container.Register<TinyServiceValidatorFactory>().AsSingleton();
             //container.Register<ProxyGenerator>().AsSingleton();
-            container.Register(ActorApplication.Instanse);
-            container.Register<TestActorService>((c, p) => new TestActorService(c.Resolve<ActorApplication>()));
+            //container.Register(ActorApplication.Instanse);
+            //container.Register<TestActorService>((c, p) => new TestActorService(c.Resolve<ActorApplication>()));
             ServiceLocator.SetLocatorProvider(() => new TinyIoCServiceLocator(container));
         }
 
@@ -126,19 +147,21 @@ namespace TinyService.Application
                         Assembly.GetExecutingAssembly(),
                         Assembly.Load("TinyService"),
                         Assembly.Load("TinyService.Log4Net")
-                        //typeof(ServiceBase).Assembly,
-                        //typeof(ILoggerFactory).Assembly
-                        );
-                    containerbuilder.RegisterType<ProxyGenerator>().SingleInstance();
+                         );
 
+                    containerbuilder.RegisterGeneric(typeof(InMemoryDomainStore<,>)).AsImplementedInterfaces().SingleInstance();
+                    containerbuilder.RegisterType<DefaultCommandService>().AsImplementedInterfaces().SingleInstance();
+                    containerbuilder.RegisterType<DefaultDomainEventPublisher>().AsImplementedInterfaces().SingleInstance();
+                    containerbuilder.RegisterType<DefaultServiceBus>().AsImplementedInterfaces().SingleInstance();
                     containerbuilder.RegisterInstance(ActorApplication.Instanse);
                     containerbuilder.Register<TestActorService>(p => new TestActorService(p.Resolve<ActorApplication>()));
-                    //containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
-                    containerbuilder.RegisterType<BlogService>().AsImplementedInterfaces();
 
+                    containerbuilder.RegisterType<InventoryRepository>().AsImplementedInterfaces();
+
+                    ////containerbuilder.RegisterType<DefaultRequestServiceController>().SingleInstance().AsImplementedInterfaces();
+                    //containerbuilder.RegisterType<BlogService>().AsImplementedInterfaces();
                     //containerbuilder.Register<TinyServiceValidatorFactory>().AsSingleton();
                 });
-
             });
         }
 

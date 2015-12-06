@@ -69,5 +69,28 @@ namespace TinyService.Application
     public class QueryBlogRequest : IRequest<AddRess>
     {
 
+        public string Id
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public DateTime Timestamp
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

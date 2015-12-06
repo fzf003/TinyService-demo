@@ -19,18 +19,18 @@ namespace TinyService.Test.Repository
         }
         public override void Delete(User entity)
         {
-            store.Remove(entity.ID);
+            store.Remove(entity.Id);
         }
 
         public override User Insert(User entity)
         {
-            store[entity.ID] = entity;
+            store[entity.Id] = entity;
             return entity;
         }
 
         public override User Update(User entity)
         {
-            store[entity.ID] = entity;
+            store[entity.Id] = entity;
             return entity;
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TinyService.Infrastructure.RequestHandler
 {
-    public interface ICommandService 
+    /*public interface ICommandServices 
     {
         TResponse Send<TRequest, TResponse>(TRequest request)
             where TRequest : class, IRequest
@@ -25,5 +25,5 @@ namespace TinyService.Infrastructure.RequestHandler
           
 
          
-    }
+    }*/
 }

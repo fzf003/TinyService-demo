@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TinyService.Infrastructure.Process.Actor;
 
-namespace TinyService.Infrastructure.Message
+namespace TinyService.Infrastructure
 {
    
     public class ActorMessage : Message

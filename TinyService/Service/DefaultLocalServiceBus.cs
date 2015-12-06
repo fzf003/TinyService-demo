@@ -6,6 +6,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
+using TinyService.Domain.Entities;
 using TinyService.Infrastructure;
 using TinyService.Infrastructure.RegisterCenter;
 
@@ -13,12 +14,14 @@ namespace TinyService.Service
 {
 
     [Component(IsSingleton = true)]
-    public class DefaultLocalServiceBus : IServiceBus
+    public class DefaultLocalServiceBus :IServiceBus
     {
         private readonly IDictionary<string, object> _messagehandler;
 
         private readonly EventHandlerRegistry _eventsobservables = EventHandlerRegistry.Instance;
+
         private CompositeDisposable disposables;
+
         public DefaultLocalServiceBus()
         {
             _messagehandler = new ConcurrentDictionary<string, object>();
@@ -34,7 +37,9 @@ namespace TinyService.Service
 
         public IDisposable RegisterMessageHandler<TCommand>(IObserver<TCommand> observer) where TCommand : class
         {
+           
             this._messagehandler[typeof(TCommand).Name] = observer;
+
             var disposable = Disposable.Create(() =>
             {
                 var observerhandler = (this._messagehandler[typeof(TCommand).Name] as IObserver<TCommand>);
@@ -44,7 +49,6 @@ namespace TinyService.Service
 
             disposables.Add(disposable);
             return disposable;
-
         }
 
         public void Send<TCommand>(TCommand message) where TCommand : class
@@ -61,14 +65,22 @@ namespace TinyService.Service
 
         public void Publish<T>(T message)
         {
-            Parallel.ForEach(this._eventsobservables.GetEventHandler(typeof(T)), (item) =>
+            foreach(var item in this._eventsobservables.GetEventHandler(typeof(T)))
             {
-                if (item != null)
+                  if (item != null)
                 {
                     var observer = (ISubject<T>)item;
                     observer.OnNext(message);
                 }
-            });
+            }
+            //Parallel.ForEach(this._eventsobservables.GetEventHandler(typeof(T)), (item) =>
+            //{
+            //    if (item != null)
+            //    {
+            //        var observer = (ISubject<T>)item;
+            //        observer.OnNext(message);
+            //    }
+            //});
         }
 
         public IDisposable Subscribe<T>(IObserver<T> handler)

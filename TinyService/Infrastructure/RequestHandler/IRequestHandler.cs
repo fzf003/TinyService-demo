@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TinyService.Infrastructure.RequestHandler
 {
-    public interface IRequest { }
+    public interface IRequest:IMessage { }
 
 
     public interface IRequest<out T>:IRequest
@@ -28,8 +28,6 @@ namespace TinyService.Infrastructure.RequestHandler
         where TResponse : class
     {
         TResponse Handle(TRequest message);
-
-
     }
 
     public interface IRequestHandler<TRequest>

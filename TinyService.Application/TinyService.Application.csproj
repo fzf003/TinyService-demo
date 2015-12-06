@@ -95,9 +95,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppMessage.cs" />
     <Compile Include="BlogService.cs" />
     <Compile Include="Hub\ClientHub.cs" />
+    <Compile Include="Models\InventoryRepository.cs" />
+    <Compile Include="Models\Command\InventoryCommandHandler.cs" />
+    <Compile Include="Models\TestDomainEventHandler.cs" />
+    <Compile Include="Models\DomainEvent\InventoryItemDeactivated.cs" />
+    <Compile Include="Models\DomainEvent\BaseDomainEvent.cs" />
+    <Compile Include="Models\InventoryItem.cs" />
+    <Compile Include="Models\TestCommand.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="TestActorService.cs" />
     <Compile Include="ServiceFactory.cs" />
