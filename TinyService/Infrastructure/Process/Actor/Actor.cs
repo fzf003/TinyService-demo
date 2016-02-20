@@ -22,7 +22,7 @@ namespace TinyService.Infrastructure.Process.Actor
 
         public Actor(Uri uri, ActorApplication factory)
         {
-            _actorhandler = new ActionBlock<ActorMessage>(async message =>
+            _actorhandler = new ActionBlock<ActorMessage>( message =>
             {
                 dynamic self = this;
                 dynamic mess = message;

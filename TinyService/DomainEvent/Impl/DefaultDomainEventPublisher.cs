@@ -11,7 +11,7 @@ using System.Reactive.Disposables;
 
 namespace TinyService.DomainEvent.Impl
 {
-    public class DefaultDomainEventPublisher : IDomainEventPublisher
+    public class DefaultDomainEventPublisher 
     {
         private const int BoundedCapacity = 1024;
         private readonly BlockingCollection<IDomainEvent> _queue;
@@ -45,7 +45,6 @@ namespace TinyService.DomainEvent.Impl
             {
                    this._replaysubjects.OnNext(@event);
             }
-
         }
 
 

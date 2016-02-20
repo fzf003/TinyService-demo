@@ -13,11 +13,19 @@ namespace TinyService.Domain.Entities
     public abstract class AggregateRoot<TPrimaryKey> : IAggregateRoot<TPrimaryKey>
     {
         private readonly List<IDomainEvent> _changes = new List<IDomainEvent>();
-
+ 
         public virtual TPrimaryKey Id
         {
             get;
             private set;
+        }
+         public AggregateRoot()
+        {
+
+        }
+        public AggregateRoot(TPrimaryKey id)
+        {
+            this.Id = id;
         }
 
         public int Version { get; internal set; }

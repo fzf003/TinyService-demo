@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace TinyService.Command
 {
-    public interface ICommandHandler<TCommand>
-         where TCommand : class,ICommand
+    public interface ICommandHandler<TCommand> : ICommandHandler
+                    where TCommand : class,ICommand
     {
-        void Handle(TCommand command);
+        void Handle(ICommandContext context, TCommand command);
+    }
+
+    public interface ICommandHandler
+    {
+
     }
 }

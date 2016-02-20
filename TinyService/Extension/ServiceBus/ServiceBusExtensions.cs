@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TinyService.Infrastructure;
+using TinyService.Service;
 
 namespace TinyService.Extension.ServiceBus
 {
     public static class ServiceBusExtensions
     {
 
-        public static Task PublishAsync<T>(this IServiceBus bus, T message)
+       /* public static Task PublishAsync<T>(this IServiceBus bus, T message)
         {
             var sendaction = new Action(() => { bus.Publish<T>(message); });
             return Task.Factory.FromAsync(sendaction.BeginInvoke, sendaction.EndInvoke, null);
@@ -43,7 +44,8 @@ namespace TinyService.Extension.ServiceBus
         public static IDisposable ToSubscribe<T>(this IObservable<T> self, Action<T> action)
         {
             return self.Subscribe(new Handler<T>(action));
-        }
+        }*/
 
+     
     }
 }

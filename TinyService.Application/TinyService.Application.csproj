@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlogService.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Hub\ClientHub.cs" />
     <Compile Include="Models\InventoryRepository.cs" />
     <Compile Include="Models\Command\InventoryCommandHandler.cs" />

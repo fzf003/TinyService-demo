@@ -12,6 +12,5 @@ namespace TinyService.Command
         public List<IDomainEvent> Events { get; set; }
 
         public ICommand Command { get; set; }
-
-    }
+     }
 }

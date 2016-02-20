@@ -22,6 +22,11 @@ namespace TinyService.Infrastructure
             return ServiceLocator.Current.GetInstance<T>();
         }
 
+        public static T GetService<T>(Type sericetype)
+        {
+            return (T)ServiceLocator.Current.GetService(sericetype);
+        }
+
         public static T GetService<T>(string key)
         {
             return ServiceLocator.Current.GetInstance<T>(key);

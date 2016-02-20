@@ -9,75 +9,98 @@ using TinyService.Infrastructure;
 using System.Reactive.Linq;
 using System.Reactive;
 using TinyService.Domain.Entities;
+using System.Reactive.Concurrency;
+using TinyService.Command.Impl;
 namespace TinyService.Service
 {
-    [Component(IsSingleton=true)]
-    public class DefaultServiceBus : TinyService.Service.IDefaultServiceBus
+    [Component(IsSingleton = true)]
+    public class DefaultServiceBus : IServiceBus
     {
-        private ICommandService _commandservice;
-        private readonly IDomainEventPublisher _eventpublisher;
-         
-        public DefaultServiceBus(ICommandService commandservice, IDomainEventPublisher eventpublisher)
+        private readonly TinyService.Command.ICommandDispenser _commandDispenser;
+
+        private readonly TinyService.Command.ICommandProcessor _commandProcessor;
+
+        private readonly IEventPublisher _eventpublisher;
+
+        private readonly CommandResultProcessor _commandResultProcessor;
+
+
+        public DefaultServiceBus(TinyService.Command.ICommandProcessor commandProcessor, TinyService.Command.ICommandDispenser commandDispenser, IEventPublisher eventpublisher)
         {
-            this._commandservice = commandservice;
+            this._commandDispenser = commandDispenser;
             this._eventpublisher = eventpublisher;
-            this._eventpublisher.Start();
-            
-         }
-  
+            this._commandProcessor = commandProcessor;
+            this._commandResultProcessor = new CommandResultProcessor();
+        }
+
         public void Dispose()
         {
-            if(this._commandservice!=null)
+            if (this._commandDispenser != null)
             {
-                this._commandservice.Dispose();
+                this._commandDispenser.Dispose();
             }
 
             if (this._eventpublisher != null)
             {
                 this._eventpublisher.Dispose();
             }
-            
+
         }
 
-        public CommandExecuteResult Send<TCommand>(TCommand command, int timeoutmilliseconds=10000) where TCommand : class, ICommand
+        //public CommandResponse Send<TCommand>(TCommand command, int timeoutmilliseconds = 10000) where TCommand : class, ICommand
+        //{
+        //    var result = this._commandservice.Send(command, timeoutmilliseconds);
+        //    return ConvertCommandResponse(result);
+        //}
+
+        public async Task<CommandResult> SendAsync<TCommand>(TCommand command, int timeoutmilliseconds = 10000) where TCommand : class, ICommand
         {
-
-            return this._commandservice.Send(command, CommitEvents, timeoutmilliseconds);
+            var task=new TaskCompletionSource<CommandResult>();
+            _commandResultProcessor.RegisterProcessingCommand(command, task);
+             this._commandDispenser.SendAsync(command);
+             return await task.Task.ConfigureAwait(false);
         }
 
-        public Task<CommandExecuteResult> SendAsync<TCommand>(TCommand command, int timeoutmilliseconds=10000) where TCommand : class, ICommand
+
+        //CommandResponse ConvertCommandResponse(CommandExecuteResult result)
+        //{
+        //    return new CommandResponse()
+        //    {
+        //        ErrorMessage = result.ErrorMessage,
+        //        Status = result.Status
+        //    };
+        //}
+
+        public IDisposable RegisterCommandType<TCommand>() where TCommand : class, ICommand
         {
-
-            return this._commandservice.SendAsync(command, CommitEvents, timeoutmilliseconds);
+           return this._commandDispenser.GetMessages()
+                .RegisterCommand<TCommand>(this._commandProcessor);
         }
 
-        private void CommitEvents(IEnumerable<IDomainEvent> events)
-        {
-            if (events.Any())
-            {
-                foreach (var domainevent in events)
-                {
-                    _eventpublisher.Dispatch(domainevent);
-                }
-             }
-           
-        }
 
-        public void Publish<T>(T message) where T:IDomainEvent
+
+        public void Publish<T>(T message) where T : IDomainEvent
         {
             this._eventpublisher.Dispatch(message);
         }
 
         public IDisposable ToSubscribe<T>(IObserver<T> handler) where T : IDomainEvent
         {
-            if(handler==null)
+            if (handler == null)
             {
                 throw new ArgumentNullException("not is handle");
             }
 
-            return this._eventpublisher.GetDomainEvents()
+            return this._eventpublisher
+                       .GetMessages()
                        .OfType<T>()
                        .Subscribe(handler);
         }
-    }
+
+
+        public IDisposable ToSubscribe<T>(Action<T> action) where T : IDomainEvent
+        {
+            return this.ToSubscribe<T>(new Handler<T>(action));
+        }
+     }
 }

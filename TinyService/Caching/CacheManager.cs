@@ -23,7 +23,7 @@ namespace TinyService.Caching
             return Add(key, value, cachePolicy);
         }
 
-         public bool Add(string key, object value, DateTimeOffset absoluteExpiration)
+        public bool Add(string key, object value, DateTimeOffset absoluteExpiration)
         {
             var cachePolicy = CachePolicy.WithAbsoluteExpiration(absoluteExpiration);
             return Add(key, value, cachePolicy);

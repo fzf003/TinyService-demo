@@ -51,25 +51,47 @@ namespace TinyService.Application
         {
             Init();
 
-           var bus = ObjectFactory.GetService<IDefaultServiceBus>();
+            var app = ActorApplication.Instanse;
 
-           var eventhandler = ObjectFactory.GetService<IDomainEventHandler<InventoryItemCreated>>();
+            app.AddMailBox("test", () => new TestActorService(app), Environment.ProcessorCount);
+
+
+            Enumerable.Range(1,100000).Select(p => app.Dispatcher(new AddMessage("test")
+            {
+                Index = p
+            })).ToArray();
             
-            bus.ToSubscribe<InventoryItemCreated>(new Handler<InventoryItemCreated>(eventhandler.Handle));
 
-            var rename = bus.ToSubscribe(new Handler<InventoryItemRenamed>( ObjectFactory.GetService<IDomainEventHandler<InventoryItemRenamed>>().Handle));
- 
-            Enumerable.Range(1, 10).Select(p => new CreateItemCommand()
+           // RxPublisher<string> publisher = new RxPublisher<string>();
+           // publisher.GetDomainEvents().Subscribe(p => {
+           //     Console.WriteLine(p);
+           // });
+           // publisher.Start();
+           // Enumerable.Range(1, 100000).Select(p =>
+           //publisher.SendMessage(Guid.NewGuid().ToString()))
+           //.ToArray();
+           
+
+            /*var bus = ObjectFactory.GetService<IServiceBus>();
+            
+            var eventhandler = ObjectFactory.GetService<IDomainEventHandler<InventoryItemCreated>>();
+            var renamehandler = ObjectFactory.GetService<IDomainEventHandler<InventoryItemRenamed>>();
+            bus.ToSubscribe<InventoryItemCreated>(eventhandler.Handle);
+            bus.ToSubscribe<InventoryItemRenamed>(renamehandler.Handle);
+
+            Enumerable.Range(1, 2).Select(p => new CreateItemCommand()
                 {
-                    Name = string.Format("fzf{0}" , p)
+                    Name = string.Format("fzf{0}", p)
                 })
                 .Select(p => bus.SendAsync(p))
                 .Select(p => p.ToObservable().Subscribe(k =>
                 {
                     Console.WriteLine("index:{0}", k.Status + "|" + k.ErrorMessage);
                 }))
-                .ToArray();
- 
+                .ToArray();*/
+
+             
+
 
             //using (WebApp.Start<Startup>("http://localhost:9090/"))
             //{
@@ -100,26 +122,7 @@ namespace TinyService.Application
             });
         }
 
-        static void ServiceBus()
-        {
-            var bus = ObjectFactory.GetService<IServiceBus>();
 
-            bus.ToSubscribe<AppMessage>((item) =>
-            {
-                Console.WriteLine(item.Id + "|" + item.Timestamp);
-            });
-
-            bus.RegisterMessageHandler<AppMessage>(message =>
-            {
-                Console.WriteLine(message.Id + "|" + message.Timestamp + "|" + Thread.CurrentThread.ManagedThreadId);
-            });
-
-
-          
-
-
-
-        }
 
         static void TinyIocInit()
         {

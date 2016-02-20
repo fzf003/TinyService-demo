@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E19C6C88-FC09-417D-8DFF-92E82F2E2EB1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Products_Core</RootNamespace>
+    <AssemblyName>Products-Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Adapters\ProductRepository.cs" />
+    <Compile Include="Ports\Commands\AddProductCommand.cs" />
+    <Compile Include="Model\Product.cs" />
+    <Compile Include="Ports\Commands\BaseCommand.cs" />
+    <Compile Include="Ports\Commands\ChangeProductCommand.cs" />
+    <Compile Include="Ports\Commands\RemoveProductCommand.cs" />
+    <Compile Include="Ports\Events\BaseDomainEvent.cs" />
+    <Compile Include="Ports\Events\ProductRemovedEvent.cs" />
+    <Compile Include="Ports\Events\ProductChangedEvent.cs" />
+    <Compile Include="Ports\Events\ProductAddedEvent.cs" />
+    <Compile Include="Ports\Handlers\ProductCommandHandler.cs" />
+    <Compile Include="Ports\Handlers\ProductAddedEventHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TinyService.Autofac\TinyService.Autofac.csproj">
+      <Project>{6ee0312b-5fd8-43fa-8423-95b3e569fd48}</Project>
+      <Name>TinyService.Autofac</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TinyService\TinyService.csproj">
+      <Project>{c71b12cd-7f25-475a-b63a-018c4f94ff32}</Project>
+      <Name>TinyService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

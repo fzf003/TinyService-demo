@@ -11,4 +11,6 @@ namespace TinyService.DomainEvent
     {
         void Handle(TDomainEvent @event);
     }
+
+
 }

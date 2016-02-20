@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TinyService.Infrastructure;
 using TinyService.Infrastructure.Proxy;
 using TinyService.Extension.ServiceBus;
+using TinyService.Service;
 
 namespace TinyService.Application
 {
@@ -45,10 +46,7 @@ namespace TinyService.Application
                 invocation.Proceed();
             }catch(Exception ex)
             {
-                //Parallel.For(1, 10, i => {
-                    this._servicebus.PublishAsync<dynamic>(new {  ex = ex.InnerException.Message });
-
-                //});
+              
             }
         }
     }

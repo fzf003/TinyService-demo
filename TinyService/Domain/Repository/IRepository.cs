@@ -9,7 +9,7 @@ using TinyService.Domain.Entities;
 namespace TinyService.Domain.Repository
 {
     public interface IRepository<TId, TEntity> : IOnlyReadRepository<TId, TEntity>, IOnlyWriteRepository<TId, TEntity>
-         where TEntity : class,IAggregateRoot<TId>
+         where TEntity : class,IAggregateRoot
     {
 
         int Count();
@@ -19,7 +19,7 @@ namespace TinyService.Domain.Repository
     }
 
     public interface IOnlyReadRepository<TId, TEntity>
-         where TEntity : class,IAggregateRoot<TId>
+         where TEntity : class,IAggregateRoot
     {
          IQueryable<TEntity> GetAll();
          TEntity FirstOrDefault(TId id);
@@ -28,7 +28,7 @@ namespace TinyService.Domain.Repository
     }
 
     public interface IOnlyWriteRepository<TId,TEntity>
-        where TEntity : class,IAggregateRoot<TId>
+        where TEntity : class,IAggregateRoot
     {
          TEntity Insert(TEntity entity);
 

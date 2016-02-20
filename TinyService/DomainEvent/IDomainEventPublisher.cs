@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
+using TinyService.Infrastructure;
 namespace TinyService.DomainEvent
 {
-    public interface IDomainEventPublisher:IDisposable
+    public interface IEventPublisher : IDisposable, IMessageDispenser<IDomainEvent>
     {
-        bool Dispatch(IDomainEvent @event);
-        void Start();
-        IObservable<IDomainEvent> GetDomainEvents();
+        Task<bool> Dispatch(IDomainEvent @event);
     }
 }

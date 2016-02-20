@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace TinyService.Infrastructure
 {
-    //public interface IObjectContainer
-    //{
-    //    // TService Resolve<TService>() where TService : class;
-
-
-    //}
+ 
 
     public interface IObjectContainer:IDisposable
     {

@@ -6,8 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TinyService.Infrastructure;
-using TinyService.Modules;
-
+ 
 namespace TinyService.autofac
 {
     public  class TinyServiceSetup
@@ -60,13 +59,13 @@ namespace TinyService.autofac
         //    return this;
         //}
 
-        bool IsModule(Type type)
+       /* bool IsModule(Type type)
         {
             return
                 type.IsClass &&
                 !type.IsAbstract &&
                 typeof(TinyModule).IsAssignableFrom(type);
-        }
+        }*/
 
      
     }
