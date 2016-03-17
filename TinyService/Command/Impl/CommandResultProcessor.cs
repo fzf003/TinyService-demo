@@ -9,17 +9,12 @@ using TinyService.Infrastructure;
 namespace TinyService.Command.Impl
 {
     [Component(IsSingleton = true)]
-    public class CommandResultProcessor 
+    public class CommandResultProcessor
     {
         ConcurrentDictionary<string, CommandTaskCompletionSource> _commandTaskDict = new ConcurrentDictionary<string, CommandTaskCompletionSource>();
-        //private readonly BlockingCollection<CommandResult> _commandExecutedMessageLocalQueue;
-        //private readonly Worker _commandExecutedMessageWorker;
+
         public CommandResultProcessor()
         {
-             //this._commandExecutedMessageLocalQueue = new BlockingCollection<CommandResult>(new ConcurrentQueue<CommandResult>());
-            //this._commandExecutedMessageWorker = new Worker("CommandResult", () => ProcessMessage(this._commandExecutedMessageLocalQueue.Take()));
-            //this._commandExecutedMessageWorker.Start();
-            //this._commandExecutedMessageLocalQueue.GetConsumingEnumerable().ToObservable(TaskPoolScheduler.Default).Subscribe(p => ProcessMessage(p));
         }
 
         public void RegisterProcessingCommand(ICommand command, TaskCompletionSource<CommandResult> taskCompletionSource)
@@ -28,10 +23,10 @@ namespace TinyService.Command.Impl
             {
                 throw new Exception(string.Format("重复处理请求, type:{0}, id:{1}", command.GetType().Name, command.GetHashCode().ToString()));
             }
-             
+
         }
 
-        public void ProcessFailedSendingCommand(ICommand command,string errormsg)
+        public void ProcessFailedSendingCommand(ICommand command, string errormsg)
         {
             CommandTaskCompletionSource commandTaskCompletionSource;
             if (_commandTaskDict.TryRemove(command.GetHashCode().ToString(), out commandTaskCompletionSource))
@@ -60,7 +55,7 @@ namespace TinyService.Command.Impl
             }
         }
 
-        
+
     }
 
     class CommandTaskCompletionSource
@@ -81,7 +76,7 @@ namespace TinyService.Command.Impl
 
         public CommandResult() { }
 
-       
+
     }
 
     public enum CommandStatus

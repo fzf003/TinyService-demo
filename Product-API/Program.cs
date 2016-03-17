@@ -33,7 +33,7 @@ namespace Product_API
         static void Main(string[] args)
         {
             Init();
-           
+
             var bus = ObjectFactory.GetService<IServiceBus>();
 
             RegisterEventHandler(bus);
@@ -42,7 +42,7 @@ namespace Product_API
             bus.RegisterCommandType<ChangeProductCommand>();
             bus.RegisterCommandType<RemoveProductCommand>();
 
-            Enumerable.Range(1, 3000).Select(p =>
+            Enumerable.Range(1, 3).Select(p =>
            bus.SendAsync(new AddProductCommand(
                                     productName: "笔记本",
                                     productDescription: "这是一个电脑笔记本",
@@ -57,14 +57,14 @@ namespace Product_API
                                   }
                               })
                               ).ToArray();
-            
+
 
 
             bus.SendAsync(new ChangeProductCommand("1", "ppo", "kMM", 892));
-            
+
             bus.SendAsync(new RemoveProductCommand("1"));
 
-            
+
             Console.WriteLine(".....");
             Console.ReadKey();
         }
@@ -89,7 +89,7 @@ namespace Product_API
                         Assembly.Load("TinyService"),
                         Assembly.Load("TinyService.Log4Net")
                          );
-                 });
+                });
             });
         }
     }
