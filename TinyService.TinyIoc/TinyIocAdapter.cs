@@ -48,7 +48,7 @@ namespace TinyService.TinyIoc
 
         public void RegisterType(Type serviceType, Type implementationType, LifeStyle life = LifeStyle.Singleton)
         {
-            //throw new NotImplementedException();
+            
 
             this._container.Register(serviceType, implementationType);
         }

@@ -13,7 +13,7 @@ namespace TinyService.Command.Impl
     {
         readonly CommandUnitOfWork _unitOfWork;
         readonly List<IAggregateRoot> _trackedAggregateRoots;
-        
+
         public DefaultCommandContext(CommandUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -21,7 +21,7 @@ namespace TinyService.Command.Impl
         }
 
 
-        public TAggregateRoot Create<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot :class, IAggregateRoot
+        public TAggregateRoot Create<TAggregateRoot>(TAggregateRoot aggregateRoot) where TAggregateRoot : class, IAggregateRoot
         {
             string aggregateRootId = aggregateRoot.AsDynamic().Id.ToString();
 
@@ -30,28 +30,28 @@ namespace TinyService.Command.Impl
                 throw new InvalidOperationException(string.Format("不能创建 {0}聚合根  ID为 {1} 该聚合根实例已存在!",
                     typeof(TAggregateRoot), aggregateRootId));
             }
- 
+
             _unitOfWork.AddToCache(aggregateRootId, aggregateRoot);
-  
-            if(!_trackedAggregateRoots.Contains(aggregateRoot))
+
+            if (!_trackedAggregateRoots.Contains(aggregateRoot))
             {
-                 _trackedAggregateRoots.Add(aggregateRoot);
+                _trackedAggregateRoots.Add(aggregateRoot);
             }
-            
- 
+
+
             return aggregateRoot;
         }
 
         public TAggregateRoot Get<TAggregateRoot>(string aggregateRootId) where TAggregateRoot : class,IAggregateRoot
         {
-            var root =_unitOfWork.Get<TAggregateRoot>(aggregateRootId, createIfNotExists: false);
- 
-             if (!_trackedAggregateRoots.Contains(root))
-             {
-                 _trackedAggregateRoots.Add(root);
-             }
-             return root as TAggregateRoot;
-         }
+            var root = _unitOfWork.Get<TAggregateRoot>(aggregateRootId, createIfNotExists: false);
+
+            if (!_trackedAggregateRoots.Contains(root))
+            {
+                _trackedAggregateRoots.Add(root);
+            }
+            return root as TAggregateRoot;
+        }
 
 
         public List<IAggregateRoot> GetTrackedAggregateRoots()

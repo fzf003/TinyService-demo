@@ -74,6 +74,7 @@
     <Compile Include="Caching\CacheTag.cs" />
     <Compile Include="Caching\ICacheProvider.cs" />
     <Compile Include="Caching\MemoryCacheProvider.cs" />
+    <Compile Include="Command\Disposable.cs" />
     <Compile Include="Command\ICommandDispenser.cs" />
     <Compile Include="Command\ICommandProcessor.cs" />
     <Compile Include="Command\CommandProcessingResult.cs" />
@@ -122,7 +123,6 @@
     <Compile Include="Infrastructure\CommonComposition\ComponentAttribute.cs" />
     <Compile Include="Infrastructure\CommonComposition\NamedAttribute.cs" />
     <Compile Include="Infrastructure\IObjectContainer.cs" />
-    <Compile Include="Infrastructure\IServiceBus.cs" />
     <Compile Include="Infrastructure\Log\ILoggerFactory.cs" />
     <Compile Include="Infrastructure\Log\ILogger.cs" />
     <Compile Include="Infrastructure\ObjectFactory.cs" />
@@ -135,7 +135,6 @@
     <Compile Include="Infrastructure\Proxy\IProxyFactory.cs" />
     <Compile Include="Infrastructure\Proxy\ProxyFactory.cs" />
     <Compile Include="Infrastructure\RegisterCenter\EventHandlerRegistry.cs" />
-    <Compile Include="Infrastructure\RequestHandler\ICommandService.cs" />
     <Compile Include="Infrastructure\RequestHandler\IRequestHandler.cs" />
     <Compile Include="Infrastructure\Handler.cs" />
     <Compile Include="Infrastructure\Message\Message.cs" />

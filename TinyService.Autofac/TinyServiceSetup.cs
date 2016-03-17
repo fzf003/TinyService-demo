@@ -51,22 +51,7 @@ namespace TinyService.autofac
                 
         }
 
-        //public TinyServiceSetup RegisterModule(params Assembly[] assemblyes)
-        //{
-        //    //assemblyes.SelectMany(p => p.GetTypes())
-        //    //          .Where(p => this.IsModule(p))
-        //    //          .ToList().ForEach(p=>p.);
-        //    return this;
-        //}
-
-       /* bool IsModule(Type type)
-        {
-            return
-                type.IsClass &&
-                !type.IsAbstract &&
-                typeof(TinyModule).IsAssignableFrom(type);
-        }*/
-
+   
      
     }
 }

@@ -18,19 +18,16 @@ namespace TinyService.Service
     {
         private readonly TinyService.Command.ICommandDispenser _commandDispenser;
 
-        private readonly TinyService.Command.ICommandProcessor _commandProcessor;
-
         private readonly IEventPublisher _eventpublisher;
 
         private readonly CommandResultProcessor _commandResultProcessor;
 
 
-        public DefaultServiceBus(TinyService.Command.ICommandProcessor commandProcessor, TinyService.Command.ICommandDispenser commandDispenser, IEventPublisher eventpublisher)
+        public DefaultServiceBus(TinyService.Command.ICommandDispenser commandDispenser, IEventPublisher eventpublisher)
         {
             this._commandDispenser = commandDispenser;
             this._eventpublisher = eventpublisher;
-            this._commandProcessor = commandProcessor;
-            this._commandResultProcessor = new CommandResultProcessor();
+            this._commandResultProcessor = ObjectFactory.GetService<CommandResultProcessor>();// new CommandResultProcessor();
         }
 
         public void Dispose()
@@ -47,34 +44,21 @@ namespace TinyService.Service
 
         }
 
-        //public CommandResponse Send<TCommand>(TCommand command, int timeoutmilliseconds = 10000) where TCommand : class, ICommand
-        //{
-        //    var result = this._commandservice.Send(command, timeoutmilliseconds);
-        //    return ConvertCommandResponse(result);
-        //}
 
-        public async Task<CommandResult> SendAsync<TCommand>(TCommand command, int timeoutmilliseconds = 10000) where TCommand : class, ICommand
+
+        public  Task<CommandResult> SendAsync<TCommand>(TCommand command, int timeoutmilliseconds = 10000) where TCommand : class, ICommand
         {
-            var task=new TaskCompletionSource<CommandResult>();
+            var task = new TaskCompletionSource<CommandResult>();
             _commandResultProcessor.RegisterProcessingCommand(command, task);
              this._commandDispenser.SendAsync(command);
-             return await task.Task.ConfigureAwait(false);
-        }
+             return task.Task;
+         }
 
 
-        //CommandResponse ConvertCommandResponse(CommandExecuteResult result)
-        //{
-        //    return new CommandResponse()
-        //    {
-        //        ErrorMessage = result.ErrorMessage,
-        //        Status = result.Status
-        //    };
-        //}
 
         public IDisposable RegisterCommandType<TCommand>() where TCommand : class, ICommand
         {
-           return this._commandDispenser.GetMessages()
-                .RegisterCommand<TCommand>(this._commandProcessor);
+            return this._commandDispenser.GetMessages().RegisterCommand<TCommand>(ObjectFactory.GetService<ICommandProcessor>());
         }
 
 
@@ -102,5 +86,5 @@ namespace TinyService.Service
         {
             return this.ToSubscribe<T>(new Handler<T>(action));
         }
-     }
+    }
 }

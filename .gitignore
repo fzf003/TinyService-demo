@@ -41,3 +41,15 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+Product-API/bin/
+Products-Core/bin/
+Products-Core/obj/
+Product-API/obj/
+TinyService.EntityFramework/obj/
+TinyService.Log4Net/bin/
+TinyService.MessageBusClient/obj/
+TinyService.SignalR/obj/
+TinyService.Autofac/bin/
+TinyService.Test/obj/
+TinyService.TinyIoc/obj/
+TinyService/obj/

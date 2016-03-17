@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace TinyService.Infrastructure.Process.Actor
 {
-    public class ActorObservable<T> : IObservable<T>
-    {
-        private readonly ActorApplication _actorRef;
+    //public class ActorObservable<T> : IObservable<T>
+    //{
+    //    private readonly ActorApplication _actorRef;
 
-        public ActorObservable(ActorApplication actorRef)
-        {
-            _actorRef = actorRef;
-        }
+    //    public ActorObservable(ActorApplication actorRef)
+    //    {
+    //        _actorRef = actorRef;
+    //    }
 
-        public IDisposable Subscribe(IObserver<T> observer)
-        {
+    //    public IDisposable Subscribe(IObserver<T> observer)
+    //    {
            
 
 
 
-            return Disposable.Create(() => {});
-        }
-    }
+    //        return Disposable.Create(() => {});
+    //    }
+    //}
 }

@@ -14,22 +14,20 @@ using TinyService.Extension.Repository;
 namespace Products_Core.Ports.Handlers
 {
 
-    [Component(IsSingleton = true)]
+    [Component(IsSingleton = false)]
     public class ProductCommandHandler : ICommandHandler<AddProductCommand>,
                                          ICommandHandler<ChangeProductCommand>,
                                          ICommandHandler<RemoveProductCommand>
     {
         public void Handle(ICommandContext context, AddProductCommand command)
         {
-            //throw new Exception("dsds");
            context.Create<Product>(new Product("1", command.ProductName, command.ProductDescription, command.ProductPrice));
         }
 
         public void Handle(ICommandContext context, ChangeProductCommand command)
         {
             Product product = context.Get<Product>(command.AggregateRootId);
-            Task.Delay(1000).Wait();
-            
+                      
             if (product == null)
             {
                 throw new Exception("该商品不存在");

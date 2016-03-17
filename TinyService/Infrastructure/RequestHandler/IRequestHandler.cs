@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace TinyService.Infrastructure.RequestHandler
 {
-    public interface IRequest:IMessage { }
+    public interface IRequest : IMessage { }
 
 
-    public interface IRequest<out T>:IRequest
+    public interface IRequest<out T> : IRequest
     {
-      
+
     }
 
- 
-   public interface IRequestHandler<TRequest, TResponse>
+
+    public interface IRequestHandler<TRequest, TResponse>
         where TRequest : class,IRequest
         where TResponse : class
     {
@@ -23,7 +23,7 @@ namespace TinyService.Infrastructure.RequestHandler
     }
 
     public interface IRequestHandler<TRequest>
-         where TRequest:class,IRequest
+         where TRequest : class,IRequest
     {
         void Handle(TRequest message);
     }
@@ -38,10 +38,9 @@ namespace TinyService.Infrastructure.RequestHandler
 
     public interface IAsyncRequestHandler<TRequest>
         where TRequest : class,IRequest
-         
     {
         Task HandleAsync(TRequest message);
     }
-   
+
 
 }

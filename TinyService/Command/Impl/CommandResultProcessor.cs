@@ -9,15 +9,15 @@ using TinyService.Infrastructure;
 namespace TinyService.Command.Impl
 {
     [Component(IsSingleton = true)]
-    public class CommandResultProcessor : IDisposable
+    public class CommandResultProcessor 
     {
-        static  ConcurrentDictionary<string, CommandTaskCompletionSource> _commandTaskDict = new ConcurrentDictionary<string, CommandTaskCompletionSource>();
-        private readonly BlockingCollection<CommandResult> _commandExecutedMessageLocalQueue;
-        private readonly Worker _commandExecutedMessageWorker;
+        ConcurrentDictionary<string, CommandTaskCompletionSource> _commandTaskDict = new ConcurrentDictionary<string, CommandTaskCompletionSource>();
+        //private readonly BlockingCollection<CommandResult> _commandExecutedMessageLocalQueue;
+        //private readonly Worker _commandExecutedMessageWorker;
         public CommandResultProcessor()
         {
-             this._commandExecutedMessageLocalQueue = new BlockingCollection<CommandResult>(new ConcurrentQueue<CommandResult>());
-            this._commandExecutedMessageWorker = new Worker("CommandResult", () => ProcessMessage(this._commandExecutedMessageLocalQueue.Take()));
+             //this._commandExecutedMessageLocalQueue = new BlockingCollection<CommandResult>(new ConcurrentQueue<CommandResult>());
+            //this._commandExecutedMessageWorker = new Worker("CommandResult", () => ProcessMessage(this._commandExecutedMessageLocalQueue.Take()));
             //this._commandExecutedMessageWorker.Start();
             //this._commandExecutedMessageLocalQueue.GetConsumingEnumerable().ToObservable(TaskPoolScheduler.Default).Subscribe(p => ProcessMessage(p));
         }
@@ -41,6 +41,15 @@ namespace TinyService.Command.Impl
             }
         }
 
+        public void ProcessFailedSendingCommand(ICommand command, Exception exception)
+        {
+            CommandTaskCompletionSource commandTaskCompletionSource;
+            if (_commandTaskDict.TryRemove(command.GetHashCode().ToString(), out commandTaskCompletionSource))
+            {
+                commandTaskCompletionSource.TaskCompletionSource.TrySetException(exception);
+            }
+        }
+
         public void SuccessCommand(ICommand command)
         {
             CommandTaskCompletionSource commandTaskCompletionSource;
@@ -51,36 +60,7 @@ namespace TinyService.Command.Impl
             }
         }
 
-        public void AddCommandResult(CommandResult result)
-        {
-            _commandExecutedMessageLocalQueue.Add(result);
-        }
-
-        void ProcessMessage(CommandResult result)
-        {
-            CommandTaskCompletionSource commandTaskCompletionSource;
-            if (_commandTaskDict.TryGetValue(result.CommandId, out commandTaskCompletionSource))
-            {
-                if (result.Status == CommandStatus.Success)
-                {
-                  
-                }
-
-                if(result.Status==CommandStatus.Failed)
-                {
-
-                }
-            }
-
-            //this._commandTaskDict.GetOrAdd(result.CommandId, new CommandTaskCompletionSource() { TaskCompletionSource = new TaskCompletionSource<CommandResult>() });
-
-            Console.WriteLine(string.Format("{0}-{1}", result.CommandId, result.Status));
-        }
-
-        public void Dispose()
-        {
-            //this._commandExecutedMessageWorker.Stop();
-        }
+        
     }
 
     class CommandTaskCompletionSource
@@ -101,21 +81,13 @@ namespace TinyService.Command.Impl
 
         public CommandResult() { }
 
-        public override string ToString()
-        {
-            return string.Format("[CommandId={0},Status={1},Result={2},ResultType={3}]",
-                CommandId,
-                Status,
-                Result,
-                ResultType);
-        }
+       
     }
 
     public enum CommandStatus
     {
         None = 0,
         Success = 1,
-        NothingChanged = 2,
-        Failed = 3
+        Failed = 2
     }
 }

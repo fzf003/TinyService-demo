@@ -34,3 +34,4 @@ D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\sv\FluentValidation.
 D:\案例\Actor\MiniQuick\TinyService\TinyService\bin\Debug\tr\FluentValidation.resources.dll
 D:\案例\Actor\MiniQuick\TinyService\TinyService\obj\Debug\TinyService.dll
 D:\案例\Actor\MiniQuick\TinyService\TinyService\obj\Debug\TinyService.pdb
+D:\案例\Actor\MiniQuick\TinyService\TinyService\obj\Debug\TinyService.csprojResolveAssemblyReference.cache

@@ -25,7 +25,6 @@ using System.Collections.Concurrent;
 using System.Reactive.Concurrency;
 using TinyService;
 using System.Reactive.Threading.Tasks;
-using TinyService.Command;
 namespace Product_API
 {
     class Program
@@ -43,28 +42,26 @@ namespace Product_API
             bus.RegisterCommandType<ChangeProductCommand>();
             bus.RegisterCommandType<RemoveProductCommand>();
 
-
-            bus.SendAsync(new AddProductCommand(
+            Enumerable.Range(1, 3000).Select(p =>
+           bus.SendAsync(new AddProductCommand(
                                     productName: "笔记本",
                                     productDescription: "这是一个电脑笔记本",
                                     productPrice: 899
-                              )).ContinueWith(task =>
+                              ))
+                              .ContinueWith(task =>
                               {
                                   Console.WriteLine(task.Status);
                                   if (task.Status == TaskStatus.Faulted)
                                   {
                                       Console.WriteLine("Error:{0}", task.Exception.InnerException.Message);
                                   }
-                              });
+                              })
+                              ).ToArray();
+            
 
-             
-             
 
-
-            Console.Read();
-
-            bus.SendAsync(new ChangeProductCommand("1", "ppo", "kMM", 892)).Wait();
-            Task.Delay(50).Wait();
+            bus.SendAsync(new ChangeProductCommand("1", "ppo", "kMM", 892));
+            
             bus.SendAsync(new RemoveProductCommand("1"));
 
             
@@ -92,8 +89,6 @@ namespace Product_API
                         Assembly.Load("TinyService"),
                         Assembly.Load("TinyService.Log4Net")
                          );
-
-                    containerbuilder.RegisterType<CommandResultProcessor>().AsSelf().SingleInstance();
                  });
             });
         }

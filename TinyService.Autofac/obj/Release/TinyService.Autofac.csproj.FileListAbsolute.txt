@@ -37,3 +37,5 @@ D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\bin\Release\tr\FluentV
 D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\obj\Release\TinyService.Autofac.csprojResolveAssemblyReference.cache
 D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\obj\Release\TinyService.autofac.dll
 D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\obj\Release\TinyService.autofac.pdb
+D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\bin\Release\System.Reactive.PlatformServices.dll
+D:\案例\Actor\MiniQuick\TinyService\TinyService.Autofac\bin\Release\System.Reactive.PlatformServices.xml

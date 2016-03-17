@@ -10,7 +10,7 @@ using TinyService.Infrastructure;
 
 namespace Products_Core.Adapters
 {
-    [Component(IsSingleton = true)]
+    [Component(IsSingleton = false)]
     public class ProductRepository : AbstractRepository<string, Product>
     {
         static ConcurrentDictionary<string, Product> store = new ConcurrentDictionary<string, Product>();

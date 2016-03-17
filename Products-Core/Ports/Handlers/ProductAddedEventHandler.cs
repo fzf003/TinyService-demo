@@ -9,7 +9,7 @@ using TinyService.Infrastructure;
 
 namespace Products_Core.Ports.Handlers
 {
-     [Component(IsSingleton = true)]
+     [Component(IsSingleton = false)]
     public class ProductAddedEventHandler : IDomainEventHandler<ProductAddedEvent>,
                                             IDomainEventHandler<ProductChangedEvent>,
                                             IDomainEventHandler<ProductRemovedEvent>

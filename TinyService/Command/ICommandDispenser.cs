@@ -31,18 +31,18 @@ namespace TinyService.Command
                             .Subscribe();
         }
 
-        static void Execute<TCommand>(TCommand command,ICommandProcessor commandProcessor, CommandResultProcessor commandResultProcessor) where TCommand : class,ICommand
+        static void Execute<TCommand>(TCommand command, ICommandProcessor commandProcessor, CommandResultProcessor commandResultProcessor) where TCommand : class,ICommand
         {
             try
             {
                 commandProcessor.ProcessCommand<TCommand>(command);
                 commandResultProcessor.SuccessCommand(command);
-
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                commandResultProcessor.ProcessFailedSendingCommand(command,ex.Message);
+                commandResultProcessor.ProcessFailedSendingCommand(command, ex);
             }
         }
     }
-
+ 
 }
